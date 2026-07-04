@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { MainLayout } from './app/layouts'
+</script>
 
 <template>
-  <RouterView></RouterView>
+  <MainLayout>
+    <RouterView />
+  </MainLayout>
 </template>

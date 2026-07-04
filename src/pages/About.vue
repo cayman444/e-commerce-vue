@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>Каталог</div>
+  <div>О нас</div>
 </template>
