@@ -1,1 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
+
+@theme {
+  --color-primary: #6a1b29;
+  --color-secondary: #111115;
+  --color-tertiary: #7b7c85;
+  --color-neutral: #fafafc;
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Noto Serif', serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-secondary);
+}
