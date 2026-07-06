@@ -20,7 +20,7 @@ const ROUTES = [
         <ul class="flex items-center gap-10 uppercase">
           <li v-for="{ text, to } in ROUTES" :key="to">
             <RouterLink
-              class="nav-link transition-all cursor-pointer font-semibold tracking-wider hover:text-primary"
+              class="nav-link transition-all cursor-pointer font-semibold tracking-wider hover:opacity-70"
               exact-active-class="active text-primary pointer-events-none"
               :to
             >
