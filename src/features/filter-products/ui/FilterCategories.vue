@@ -1,34 +1,33 @@
 <script setup lang="ts">
+import type { TCategory } from '@/entities/product'
 import { cn } from '@/shared/lib/utils'
-import { ref } from 'vue'
 
-const FILTERS = [
+const { category } = defineProps<{ category: TCategory }>()
+defineEmits<{ (e: 'set-category', category: TCategory): void }>()
+
+const CATEGORIES: { name: string; value: TCategory }[] = [
   { name: 'Все', value: 'all' },
   { name: 'Мебель', value: 'furniture' },
   { name: 'Свет', value: 'light' },
   { name: 'Предметы', value: 'items' },
   { name: 'Аксессуары', value: 'accessories' },
-] as const
-
-type TFiltersValue = (typeof FILTERS)[number]['value']
-
-const activeFilter = ref<TFiltersValue>('all')
+]
 </script>
 
 <template>
   <div class="flex items-center gap-8">
     <div
-      v-for="{ name, value } in FILTERS"
+      v-for="{ name, value } in CATEGORIES"
       :key="value"
       :class="
         cn(
           'text-tertiary cursor-pointer font-semibold uppercase transition-all hover:text-secondary pb-2 border-b-2 border-transparent',
           {
-            'text-secondary border-secondary': activeFilter === value,
+            'text-secondary border-secondary': category === value,
           },
         )
       "
-      @click="() => (activeFilter = value)"
+      @click="() => $emit('set-category', value)"
     >
       {{ name }}
     </div>

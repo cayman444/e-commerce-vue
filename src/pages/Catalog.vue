@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { ProductCard, useProductStore } from '@/entities/product'
 import { FilterCategories, SearchProducts } from '@/features/filter-products'
+import { storeToRefs } from 'pinia'
+
+const productStore = useProductStore()
+const { setCategory } = productStore
+const { filteredProducts, filters } = storeToRefs(productStore)
 </script>
 
 <template>
@@ -11,7 +17,10 @@ import { FilterCategories, SearchProducts } from '@/features/filter-products'
     </p>
   </div>
   <div class="flex justify-between items-center">
-    <FilterCategories />
-    <SearchProducts />
+    <FilterCategories :category="filters.category" @set-category="setCategory" />
+    <SearchProducts v-model="filters.search" />
+  </div>
+  <div class="grid grid-cols-4 gap-6">
+    <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
   </div>
 </template>
