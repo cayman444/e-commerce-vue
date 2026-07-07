@@ -1,23 +1,15 @@
 <script setup lang="ts">
-import type { TCategory } from '@/entities/product'
+import { CATEGORY_FILTERS, type TCategory } from '@/entities/product'
 import { cn } from '@/shared/lib/utils'
 
 const { category } = defineProps<{ category: TCategory }>()
 defineEmits<{ (e: 'set-category', category: TCategory): void }>()
-
-const CATEGORIES: { name: string; value: TCategory }[] = [
-  { name: 'Все', value: 'all' },
-  { name: 'Мебель', value: 'furniture' },
-  { name: 'Свет', value: 'light' },
-  { name: 'Предметы', value: 'items' },
-  { name: 'Аксессуары', value: 'accessories' },
-]
 </script>
 
 <template>
   <div class="flex items-center gap-8">
     <div
-      v-for="{ name, value } in CATEGORIES"
+      v-for="{ name, value } in CATEGORY_FILTERS"
       :key="value"
       :class="
         cn(

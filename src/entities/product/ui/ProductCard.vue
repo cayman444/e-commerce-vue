@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 group cursor-pointer">
+  <li class="flex flex-col gap-5 group cursor-pointer">
     <div
       class="aspect-3/4 border border-secondary/10 bg-neutral overflow-hidden relative rounded-none"
     >
@@ -27,10 +27,10 @@ defineProps<{
         <h3 class="font-display text-lg text-secondary m-0 leading-tight">
           {{ product.name }}
         </h3>
-        <span class="font-sans text-base font-semibold text-secondary">
+        <span class="font-sans text-base text-secondary">
           {{ formatPrice(product.price) }}
         </span>
       </div>
     </div>
-  </div>
+  </li>
 </template>

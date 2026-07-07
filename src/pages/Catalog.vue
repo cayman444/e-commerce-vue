@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ProductCard, useProductStore } from '@/entities/product'
-import { FilterCategories, SearchProducts } from '@/features/filter-products'
+import { ProductList, useProductStore } from '@/entities/product'
+import { FiltersProducts } from '@/features/filter-products'
 import { storeToRefs } from 'pinia'
 
 const productStore = useProductStore()
-const { setCategory } = productStore
-const { filteredProducts, filters } = storeToRefs(productStore)
+const { filteredProducts } = storeToRefs(productStore)
 </script>
 
 <template>
@@ -16,11 +15,6 @@ const { filteredProducts, filters } = storeToRefs(productStore)
       абсолютная точность.
     </p>
   </div>
-  <div class="flex justify-between items-center">
-    <FilterCategories :category="filters.category" @set-category="setCategory" />
-    <SearchProducts v-model="filters.search" />
-  </div>
-  <div class="grid grid-cols-4 gap-6">
-    <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
-  </div>
+  <FiltersProducts />
+  <ProductList :products="filteredProducts" />
 </template>
