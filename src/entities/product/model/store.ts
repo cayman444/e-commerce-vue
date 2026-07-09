@@ -108,6 +108,10 @@ export const useProductStore = defineStore('productStore', () => {
     return result
   })
 
+  const maxProductPrice = computed(() => {
+    return [...products.value].sort((a, b) => b.price - a.price)[0]?.price
+  })
+
   const setCategory = (newCategory: TCategory) => {
     filters.category = newCategory
   }
@@ -128,6 +132,7 @@ export const useProductStore = defineStore('productStore', () => {
     products,
     filters,
     filteredProducts,
+    maxProductPrice,
     setCategory,
     setPriceRange,
     setSort,
