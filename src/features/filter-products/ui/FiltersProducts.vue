@@ -10,7 +10,7 @@ const { filters } = storeToRefs(productStore)
 </script>
 
 <template>
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between items-center pb-6 border-b border-b-tertiary/10">
     <FilterCategories :category="filters.category" @set-category="setCategory" />
     <SearchProducts v-model="filters.search" />
   </div>

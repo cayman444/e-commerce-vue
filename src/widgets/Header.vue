@@ -12,7 +12,7 @@ const ROUTES = [
 
 <template>
   <header
-    class="py-8 border-b-2 border-b-tertiary/10 transition-all duration-300 bg-neutral text-secondary"
+    class="py-8 border-b border-b-tertiary/10 transition-all duration-300 bg-neutral text-secondary"
   >
     <div class="flex justify-between items-center w-full max-w-[1440px] mx-auto px-8 md:px-16">
       <h2 class="font-display text-2xl leading-8 uppercase">Archive</h2>
