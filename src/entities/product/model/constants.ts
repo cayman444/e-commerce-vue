@@ -1,4 +1,4 @@
-import type { TCategory, TProductCategory } from './types'
+import type { TCategory, TProductCategory, TSort } from './types'
 
 export const CATEGORY_LABELS: Record<TProductCategory, string> = {
   furniture: 'Мебель',
@@ -13,4 +13,10 @@ export const CATEGORY_FILTERS: { name: string; value: TCategory }[] = [
     name,
     value: value as TProductCategory,
   })),
+]
+
+export const SORT_OPTIONS: { value: TSort; label: string }[] = [
+  { value: 'newest', label: 'Сначала новые' },
+  { value: 'price-asc', label: 'Цена: по возрастанию' },
+  { value: 'price-desc', label: 'Цена: по убыванию' },
 ]
