@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useProductStore } from '@/entities/product'
+import { Switch } from '@/shared/ui/switch'
 import { storeToRefs } from 'pinia'
 import FilterCategories from './FilterCategories.vue'
 import FilterRangePrice from './FilterRangePrice.vue'
@@ -27,7 +28,12 @@ const { filters, maxProductPrice } = storeToRefs(productStore)
         <div class="self-stretch w-px bg-tertiary/10"></div>
         <FilterSort :current-sort="filters.sort" @set-sort="setSort" />
       </div>
-      <div>Только в наличии</div>
+      <label
+        for="in-stock"
+        class="flex items-center gap-3 text-sm text-tertiary uppercase font-semibold select-none cursor-pointer"
+        >Только в наличии
+        <Switch id="in-stock" v-model="filters.inStock" />
+      </label>
     </div>
   </div>
 </template>
