@@ -8,13 +8,15 @@ const { filteredProducts } = storeToRefs(productStore)
 </script>
 
 <template>
-  <div class="text-center">
-    <h1 class="font-display text-5xl leading-13 uppercase">Коллекция</h1>
-    <p class="text-lg leading-7 text-tertiary mt-6 max-w-xl mx-auto">
-      Кураторская подборка предметов и мебели, определяющих современный интерьер. Форма, функция и
-      абсолютная точность.
-    </p>
+  <div class="flex flex-col gap-16">
+    <div class="text-center">
+      <h1 class="font-display text-5xl leading-13 uppercase">Коллекция</h1>
+      <p class="text-lg leading-7 text-tertiary mt-6 max-w-xl mx-auto">
+        Кураторская подборка предметов и мебели, определяющих современный интерьер. Форма, функция и
+        абсолютная точность.
+      </p>
+    </div>
+    <FiltersProducts />
+    <ProductList :products="filteredProducts" />
   </div>
-  <FiltersProducts />
-  <ProductList :products="filteredProducts" />
 </template>

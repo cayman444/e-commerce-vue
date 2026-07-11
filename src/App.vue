@@ -4,6 +4,10 @@ import { MainLayout } from './app/layouts'
 
 <template>
   <MainLayout>
-    <RouterView />
+    <RouterView v-slot="{ Component }">
+      <Transition appear name="page" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
   </MainLayout>
 </template>
