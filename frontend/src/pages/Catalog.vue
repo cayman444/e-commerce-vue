@@ -2,9 +2,14 @@
 import { ProductList, useProductStore } from '@/entities/product'
 import { FiltersProducts } from '@/features/filter-products'
 import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 
 const productStore = useProductStore()
 const { filteredProducts } = storeToRefs(productStore)
+
+onMounted(() => {
+  productStore.fetchProducts()
+})
 </script>
 
 <template>
