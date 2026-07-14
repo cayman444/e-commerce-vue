@@ -1,43 +1,40 @@
 import { mapStrapiProductToProduct } from '@/shared/lib/utils'
+import { useAsyncState } from '@vueuse/core'
 import { isAxiosError } from 'axios'
-import { ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { getProductById } from '../api/product'
-import type { IProduct } from './types'
 
 export function useProductDetails(idSource: () => string) {
-  const product = ref<IProduct | null>(null)
-  const isLoading = ref(false)
-  const error = ref<string | null>(null)
-
-  const fetchProductDetails = async () => {
-    const id = idSource()
-    if (!id) return
-
-    try {
-      isLoading.value = true
-      error.value = null
-
+  const {
+    state: product,
+    isLoading,
+    error: rawError,
+    execute: fetchProductDetails,
+  } = useAsyncState(
+    async () => {
+      const id = idSource()
+      if (!id) return null
       const { data } = await getProductById(id)
-      product.value = mapStrapiProductToProduct(data.data)
-    } catch (err) {
-      error.value = isAxiosError(err) ? err.message : 'Не удалось загрузить товар'
-    } finally {
-      isLoading.value = false
-    }
-  }
-
-  watch(
-    idSource,
-    () => {
-      fetchProductDetails()
+      return mapStrapiProductToProduct(data.data)
     },
-    { immediate: true },
+    null,
+    {
+      resetOnExecute: false,
+    },
   )
+
+  const error = computed(() => {
+    if (!rawError.value) return null
+    return isAxiosError(rawError.value) ? rawError.value.message : 'Не удалось загрузить товар'
+  })
+
+  watch(idSource, () => {
+    fetchProductDetails()
+  })
 
   return {
     product,
     isLoading,
     error,
-    fetchProductDetails,
   }
 }

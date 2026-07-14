@@ -7,9 +7,7 @@ import { onMounted } from 'vue'
 const productStore = useProductStore()
 const { products, isLoading, error } = storeToRefs(productStore)
 
-onMounted(() => {
-  productStore.fetchProducts()
-})
+onMounted(() => productStore.fetchProducts())
 </script>
 
 <template>

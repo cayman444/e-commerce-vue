@@ -1,15 +1,12 @@
 import { mapStrapiProductToProduct } from '@/shared/lib/utils'
+import { useAsyncState } from '@vueuse/core'
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { getProductsList, getProductsRequestParams } from '../api/product'
 import type { IPriceRange, IProduct, IProductFilters, TCategory, TSort } from './types'
 
 export const useProductStore = defineStore('productStore', () => {
-  const products = ref<IProduct[]>([])
-  const isLoading = ref(false)
-  const error = ref<string | null>(null)
-
   const filters = reactive<IProductFilters>({
     category: 'all',
     search: '',
@@ -19,6 +16,27 @@ export const useProductStore = defineStore('productStore', () => {
     },
     sort: 'newest',
     inStock: false,
+  })
+
+  const {
+    state: products,
+    isLoading,
+    error: rawError,
+    execute: fetchProducts,
+  } = useAsyncState(
+    async () => {
+      const params = getProductsRequestParams(filters)
+      const { data } = await getProductsList(params)
+
+      return data.data.map(mapStrapiProductToProduct)
+    },
+    [] as IProduct[],
+    { immediate: false, resetOnExecute: false },
+  )
+
+  const error = computed(() => {
+    if (!rawError.value) return null
+    return isAxiosError(rawError.value) ? rawError.value.message : 'Ошибка загрузки продуктов'
   })
 
   const maxProductPrice = computed(() => {
@@ -39,22 +57,6 @@ export const useProductStore = defineStore('productStore', () => {
 
   const toggleInStock = () => {
     filters.inStock = !filters.inStock
-  }
-
-  const fetchProducts = async () => {
-    try {
-      isLoading.value = true
-      error.value = null
-
-      const params = getProductsRequestParams(filters)
-      const { data } = await getProductsList(params)
-
-      products.value = data.data.map(mapStrapiProductToProduct)
-    } catch (err) {
-      error.value = isAxiosError(err) ? err.message : 'Ошибка загрузки продуктов'
-    } finally {
-      isLoading.value = false
-    }
   }
 
   watch(
