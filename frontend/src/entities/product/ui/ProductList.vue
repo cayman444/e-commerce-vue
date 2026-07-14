@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import type { IProduct } from '../model/types'
 import ProductCard from './ProductCard.vue'
+import ProductCardSkeleton from './ProductCardSkeleton.vue'
 
-defineProps<{ products: IProduct[] }>()
+defineProps<{ products: IProduct[]; isLoading: boolean; error: string | null }>()
 </script>
 
 <template>
-  <ul class="grid grid-cols-2 gap-6 lg:grid-cols-4">
+  <div v-if="error" class="text-center py-10 text-red-500">Ошибка: {{ error }}</div>
+  <ul v-else-if="isLoading" class="grid grid-cols-2 gap-6 lg:grid-cols-4">
+    <TransitionGroup name="list">
+      <ProductCardSkeleton v-for="n in 8" :key="n" />
+    </TransitionGroup>
+  </ul>
+  <ul v-else class="grid grid-cols-2 gap-6 lg:grid-cols-4">
     <TransitionGroup name="list">
       <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </TransitionGroup>

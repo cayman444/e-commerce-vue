@@ -1,10 +1,22 @@
 import { apiInstance } from '@/shared/api/client'
+import { mapStrapiProductToProduct } from '@/shared/lib/utils'
+import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { computed, reactive, ref, toRef } from 'vue'
-import type { IPriceRange, IProduct, IProductFilters, TCategory, TSort } from './types'
+import { computed, reactive, ref } from 'vue'
+import type {
+  IPriceRange,
+  IProduct,
+  IProductFilters,
+  IStrapiProduct,
+  IStrapiResponse,
+  TCategory,
+  TSort,
+} from './types'
 
 export const useProductStore = defineStore('productStore', () => {
   const products = ref<IProduct[]>([])
+  const isLoading = ref(false)
+  const error = ref<string | null>(null)
 
   const filters = reactive<IProductFilters>({
     category: 'all',
@@ -70,14 +82,29 @@ export const useProductStore = defineStore('productStore', () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await apiInstance.get('/products')
+      isLoading.value = true
+      error.value = null
 
-      console.log(data)
-    } catch {}
+      const { data } = await apiInstance.get<IStrapiResponse<IStrapiProduct>>(
+        '/products?populate=image',
+      )
+
+      products.value = data.data.map(mapStrapiProductToProduct)
+    } catch (err) {
+      if (isAxiosError(err)) {
+        error.value = err.message
+      } else {
+        error.value = 'Ошибка загрузки продуктов'
+      }
+    } finally {
+      isLoading.value = false
+    }
   }
 
   return {
     products,
+    isLoading,
+    error,
     filters,
     filteredProducts,
     maxProductPrice,

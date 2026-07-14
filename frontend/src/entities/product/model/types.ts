@@ -23,3 +23,39 @@ export interface IProductFilters {
   sort: TSort
   inStock: boolean
 }
+
+export interface IStrapiMedia {
+  id: number
+  documentId: string
+  name: string
+  alternativeText: string | null
+  caption: string | null
+  width: number
+  height: number
+  url: string
+}
+
+export interface IStrapiProduct {
+  id: number
+  documentId: string
+  name: string
+  price: number
+  inStock: boolean
+  category: TProductCategory
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  image?: IStrapiMedia
+}
+
+export interface IStrapiResponse<T> {
+  data: T[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
+}

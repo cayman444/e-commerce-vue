@@ -1,3 +1,4 @@
+import type { IProduct, IStrapiProduct } from '@/entities/product'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -11,4 +12,26 @@ export function formatPrice(price: number): string {
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(price)
+}
+
+export const mapStrapiProductToProduct = ({
+  id,
+  name,
+  price,
+  inStock,
+  createdAt,
+  category,
+  image,
+}: IStrapiProduct): IProduct => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:1337'
+
+  return {
+    id,
+    name,
+    price,
+    inStock,
+    createdAt,
+    category,
+    image: image ? `${backendUrl}${image.url}` : 'https://placehold.co/200x300?text=No+Image',
+  }
 }
