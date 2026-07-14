@@ -19,6 +19,7 @@ body {
   color: var(--color-secondary);
   background-color: var(--color-neutral);
   font-size: 14px;
+  overflow-x: hidden;
 }
 
 .page-enter-active,

@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
 
 const productStore = useProductStore()
-const { filteredProducts, isLoading, error } = storeToRefs(productStore)
+const { products, isLoading, error } = storeToRefs(productStore)
 
 onMounted(() => {
   productStore.fetchProducts()
@@ -22,6 +22,6 @@ onMounted(() => {
       </p>
     </div>
     <FiltersProducts />
-    <ProductList :products="filteredProducts" :isLoading :error />
+    <ProductList :products :isLoading :error />
   </div>
 </template>

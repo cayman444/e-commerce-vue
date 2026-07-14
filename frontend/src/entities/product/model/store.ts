@@ -1,8 +1,8 @@
-import { apiInstance } from '@/shared/api/client'
 import { mapStrapiProductToProduct } from '@/shared/lib/utils'
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
+import { getProductsList, getProductsRequestParams } from '../api/product'
 import type {
   IPriceRange,
   IProduct,
@@ -27,37 +27,6 @@ export const useProductStore = defineStore('productStore', () => {
     },
     sort: 'newest',
     inStock: false,
-  })
-
-  const filteredProducts = computed(() => {
-    let result = products.value.filter((p) => {
-      const isCategoryMatch = filters.category === 'all' || p.category === filters.category
-      const isSearchMatch = p.name.toLowerCase().includes(filters.search.toLowerCase())
-
-      let isPriceMatch = true
-      if (filters.price.min !== null) {
-        isPriceMatch = isPriceMatch && p.price >= filters.price.min
-      }
-      if (filters.price.max !== null) {
-        isPriceMatch = isPriceMatch && p.price <= filters.price.max
-      }
-
-      const isInStockMatch = !filters.inStock || p.inStock
-
-      return isCategoryMatch && isSearchMatch && isPriceMatch && isInStockMatch
-    })
-
-    if (filters.sort === 'price-asc') {
-      result = [...result].sort((a, b) => a.price - b.price)
-    } else if (filters.sort === 'price-desc') {
-      result = [...result].sort((a, b) => b.price - a.price)
-    } else if (filters.sort === 'newest') {
-      result = [...result].sort(
-        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      )
-    }
-
-    return result
   })
 
   const maxProductPrice = computed(() => {
@@ -85,28 +54,30 @@ export const useProductStore = defineStore('productStore', () => {
       isLoading.value = true
       error.value = null
 
-      const { data } = await apiInstance.get<IStrapiResponse<IStrapiProduct>>(
-        '/products?populate=image',
-      )
+      const params = getProductsRequestParams(filters)
+      const { data } = await getProductsList(params)
 
       products.value = data.data.map(mapStrapiProductToProduct)
     } catch (err) {
-      if (isAxiosError(err)) {
-        error.value = err.message
-      } else {
-        error.value = 'Ошибка загрузки продуктов'
-      }
+      error.value = isAxiosError(err) ? err.message : 'Ошибка загрузки продуктов'
     } finally {
       isLoading.value = false
     }
   }
+
+  watch(
+    filters,
+    () => {
+      fetchProducts()
+    },
+    { deep: true },
+  )
 
   return {
     products,
     isLoading,
     error,
     filters,
-    filteredProducts,
     maxProductPrice,
     setCategory,
     setPriceRange,

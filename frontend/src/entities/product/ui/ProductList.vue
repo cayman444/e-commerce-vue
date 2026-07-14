@@ -8,12 +8,14 @@ defineProps<{ products: IProduct[]; isLoading: boolean; error: string | null }>(
 
 <template>
   <div v-if="error" class="text-center py-10 text-red-500">Ошибка: {{ error }}</div>
-  <ul v-else-if="isLoading" class="grid grid-cols-2 gap-6 lg:grid-cols-4">
-    <TransitionGroup name="list">
-      <ProductCardSkeleton v-for="n in 8" :key="n" />
-    </TransitionGroup>
+  <ul v-else-if="isLoading && products.length === 0" class="grid grid-cols-2 gap-6 lg:grid-cols-4">
+    <ProductCardSkeleton v-for="n in 8" :key="n" />
   </ul>
-  <ul v-else class="grid grid-cols-2 gap-6 lg:grid-cols-4">
+  <ul
+    v-else
+    class="grid grid-cols-2 gap-6 lg:grid-cols-4 transition-opacity duration-300"
+    :class="{ 'opacity-50 pointer-events-none': isLoading }"
+  >
     <TransitionGroup name="list">
       <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </TransitionGroup>
