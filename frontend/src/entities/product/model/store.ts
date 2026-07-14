@@ -3,15 +3,7 @@ import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
 import { computed, reactive, ref, watch } from 'vue'
 import { getProductsList, getProductsRequestParams } from '../api/product'
-import type {
-  IPriceRange,
-  IProduct,
-  IProductFilters,
-  IStrapiProduct,
-  IStrapiResponse,
-  TCategory,
-  TSort,
-} from './types'
+import type { IPriceRange, IProduct, IProductFilters, TCategory, TSort } from './types'
 
 export const useProductStore = defineStore('productStore', () => {
   const products = ref<IProduct[]>([])

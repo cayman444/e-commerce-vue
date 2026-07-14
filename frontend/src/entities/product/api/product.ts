@@ -6,6 +6,12 @@ export const getProductsList = (params: Record<string, unknown>) => {
   return apiInstance.get<IStrapiResponse<IStrapiProduct>>('/products', { params })
 }
 
+export const getProductById = (id: string) => {
+  return apiInstance.get<{ data: IStrapiProduct }>('/products/' + id, {
+    params: { populate: 'image' },
+  })
+}
+
 export const getProductsRequestParams = (filters: IProductFilters) => {
   const params: Record<string, unknown> = {
     populate: 'image',

@@ -7,7 +7,7 @@ export interface IPriceRange {
 export type TSort = 'newest' | 'price-asc' | 'price-desc'
 
 export interface IProduct {
-  id: number
+  id: string
   name: string
   price: number
   image: string

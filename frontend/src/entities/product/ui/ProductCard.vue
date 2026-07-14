@@ -9,28 +9,33 @@ defineProps<{
 </script>
 
 <template>
-  <li class="flex flex-col gap-5 group cursor-pointer">
-    <div
-      class="aspect-3/4 border border-secondary/10 bg-neutral overflow-hidden relative rounded-none"
+  <li>
+    <RouterLink
+      :to="{ name: 'product-details', params: { id: product.id } }"
+      class="flex flex-col gap-5 group cursor-pointer"
     >
-      <img
-        :src="product.image"
-        :alt="product.name"
-        class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
-      />
-    </div>
-    <div class="flex flex-col gap-1.5 px-1">
-      <span class="font-sans text-xs uppercase text-tertiary tracking-widest">
-        {{ CATEGORY_LABELS[product.category] }}
-      </span>
-      <div class="flex justify-between items-baseline gap-4">
-        <h3 class="font-display text-lg text-secondary m-0 leading-tight">
-          {{ product.name }}
-        </h3>
-        <span class="font-sans text-base text-secondary">
-          {{ formatPrice(product.price) }}
-        </span>
+      <div
+        class="aspect-3/4 border border-secondary/10 bg-neutral overflow-hidden relative rounded-none"
+      >
+        <img
+          :src="product.image"
+          :alt="product.name"
+          class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
+        />
       </div>
-    </div>
+      <div class="flex flex-col gap-1.5 px-1">
+        <span class="font-sans text-xs uppercase text-tertiary tracking-widest">
+          {{ CATEGORY_LABELS[product.category] }}
+        </span>
+        <div class="flex justify-between items-baseline gap-4">
+          <h3 class="font-display text-lg text-secondary m-0 leading-tight">
+            {{ product.name }}
+          </h3>
+          <span class="font-sans text-base text-secondary">
+            {{ formatPrice(product.price) }}
+          </span>
+        </div>
+      </div>
+    </RouterLink>
   </li>
 </template>

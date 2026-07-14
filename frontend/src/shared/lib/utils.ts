@@ -15,18 +15,18 @@ export function formatPrice(price: number): string {
 }
 
 export const mapStrapiProductToProduct = ({
-  id,
   name,
   price,
   inStock,
   createdAt,
   category,
   image,
+  documentId,
 }: IStrapiProduct): IProduct => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:1337'
 
   return {
-    id,
+    id: documentId,
     name,
     price,
     inStock,
