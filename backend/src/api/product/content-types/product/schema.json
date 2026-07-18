@@ -48,6 +48,20 @@
       "relation": "manyToMany",
       "target": "api::category.category",
       "mappedBy": "products"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "specs": {
+      "type": "component",
+      "component": "product.specs",
+      "repeatable": true
+    },
+    "accordions": {
+      "type": "component",
+      "component": "ui.accordion",
+      "repeatable": true
     }
   }
 }

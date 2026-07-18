@@ -6,14 +6,29 @@ export interface IPriceRange {
 }
 export type TSort = 'newest' | 'price-asc' | 'price-desc'
 
+export interface IProductSpecs {
+  id: number
+  title: string
+  description: string
+}
+
+export interface IAccordionItem {
+  id: number
+  title: string
+  content: string
+}
+
 export interface IProduct {
   id: string
   name: string
+  description: string
   price: number
   image: string
   inStock: boolean
   createdAt: string
   category: TProductCategory
+  specs?: IProductSpecs[]
+  accordions?: IAccordionItem[]
 }
 
 export interface IProductFilters {
@@ -39,6 +54,7 @@ export interface IStrapiProduct {
   id: number
   documentId: string
   name: string
+  description: string
   price: number
   inStock: boolean
   category: TProductCategory
@@ -46,6 +62,8 @@ export interface IStrapiProduct {
   updatedAt: string
   publishedAt: string
   image?: IStrapiMedia
+  specs?: IProductSpecs[]
+  accordions?: IAccordionItem[]
 }
 
 export interface IStrapiResponse<T> {

@@ -520,6 +520,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    accordions: Schema.Attribute.Component<'ui.accordion', true>;
     categories: Schema.Attribute.Relation<
       'manyToMany',
       'api::category.category'
@@ -531,6 +532,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     inStock: Schema.Attribute.Boolean & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -542,6 +544,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     price: Schema.Attribute.Integer & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    specs: Schema.Attribute.Component<'product.specs', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
