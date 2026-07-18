@@ -17,7 +17,7 @@ defineProps<{
       class="border-b border-secondary/10"
     >
       <AccordionTrigger
-        class="py-6 hover:no-underline text-xs uppercase tracking-widest text-secondary font-semibold cursor-pointer"
+        class="py-6 hover:no-underline text-xs uppercase tracking-widest text-secondary font-semibold"
       >
         {{ item.title }}
         <template #icon>

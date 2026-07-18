@@ -24,6 +24,7 @@ export interface IProduct {
   description: string
   price: number
   image: string
+  images: string[]
   inStock: boolean
   createdAt: string
   category: TProductCategory
@@ -61,7 +62,7 @@ export interface IStrapiProduct {
   createdAt: string
   updatedAt: string
   publishedAt: string
-  image?: IStrapiMedia
+  images?: IStrapiMedia[]
   specs?: IProductSpecs[]
   accordions?: IAccordionItem[]
 }

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { formatPrice } from '@/shared/lib/utils'
-import { Button } from '@/shared/ui'
+import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui/carousel'
 import type { IProduct } from '../model/types'
-import ProductAccordion from './ProductAccordion.vue'
+import ProductDetailsInfo from './ProductDetailsInfo.vue'
 
 defineProps<{
   product: IProduct | null
@@ -14,29 +13,24 @@ defineProps<{
 <template>
   <div v-if="isLoading" class="text-center">Загрузка информации о товаре...</div>
   <div v-else-if="error" class="text-red-500 text-center">{{ error }}</div>
-  <div v-else-if="product" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <img :src="product?.image" :alt="product?.name" />
+  <div v-else-if="product" class="grid grid-cols-1 lg:grid-cols-2 gap-12">
     <div class="flex flex-col gap-6">
-      <div class="pb-8 border-b border-b-tertiary/10">
-        <h1 class="text-5xl font-display">{{ product?.name }}</h1>
-        <p class="mt-4 text-2xl">{{ formatPrice(product.price) }}</p>
-      </div>
-      <p class="leading-6">{{ product.description }}</p>
-      <ul class="flex flex-col gap-6">
-        <li
-          v-for="{ id, title, description } in product.specs"
-          :key="id"
-          class="flex items-center justify-between pb-2 border-b border-b-tertiary/20"
-        >
-          <h4 class="uppercase text-tertiary">{{ title }}</h4>
-          <p>{{ description }}</p>
-        </li>
-      </ul>
-      <div class="flex flex-col gap-4">
-        <Button variant="secondary" size="lg">В корзину</Button>
-        <Button variant="outline" size="lg">В избранное</Button>
-      </div>
-      <ProductAccordion :accordions="product.accordions" />
+      <Carousel :opts="{ align: 'start', loop: true }" class="w-full">
+        <CarouselContent>
+          <CarouselItem v-for="(imgUrl, index) in product.images" :key="index">
+            <div class="aspect-3/4 overflow-hidden bg-neutral border border-secondary/10">
+              <img
+                :src="imgUrl"
+                :alt="`${product.name} - Ракурс ${index + 1}`"
+                class="w-full h-full object-cover mix-blend-multiply"
+              />
+            </div>
+          </CarouselItem>
+        </CarouselContent>
+      </Carousel>
+    </div>
+    <div class="pt-4 md:sticky md:top-32 h-fit">
+      <ProductDetailsInfo :product />
     </div>
   </div>
 </template>

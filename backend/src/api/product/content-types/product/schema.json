@@ -33,9 +33,9 @@
         "accessories"
       ]
     },
-    "image": {
+    "images": {
       "type": "media",
-      "multiple": false,
+      "multiple": true,
       "allowedTypes": [
         "images",
         "files",

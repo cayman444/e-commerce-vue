@@ -21,12 +21,17 @@ export const mapStrapiProductToProduct = ({
   inStock,
   createdAt,
   category,
-  image,
+  images,
   documentId,
   specs,
   accordions,
 }: IStrapiProduct): IProduct => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:1337'
+
+  const imageUrls =
+    images && images.length > 0
+      ? images.map((img) => `${backendUrl}${img.url}`)
+      : ['https://placehold.co/200x300?text=No+Image']
 
   return {
     id: documentId,
@@ -36,7 +41,8 @@ export const mapStrapiProductToProduct = ({
     inStock,
     createdAt,
     category,
-    image: image ? `${backendUrl}${image.url}` : 'https://placehold.co/200x300?text=No+Image',
+    image: imageUrls[0] || 'https://placehold.co/200x300?text=No+Image',
+    images: imageUrls,
     specs,
     accordions,
   }
