@@ -7,7 +7,7 @@ const { product, isLoading, error } = useProductDetails(() => route.params.id as
 </script>
 
 <template>
-  <div class="container mx-auto py-8">
+  <div class="flex flex-col gap-16 px-8 py-4 md:px-16 md:py-8">
     <div v-if="isLoading" class="text-center">Загрузка информации о товаре...</div>
     <div v-else-if="error" class="text-red-500 text-center">{{ error }}</div>
     <div v-else-if="product">

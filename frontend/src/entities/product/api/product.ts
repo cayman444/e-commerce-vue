@@ -7,15 +7,11 @@ export const getProductsList = (params: Record<string, unknown>) => {
 }
 
 export const getProductById = (id: string) => {
-  return apiInstance.get<{ data: IStrapiProduct }>('/products/' + id, {
-    params: { populate: 'image' },
-  })
+  return apiInstance.get<{ data: IStrapiProduct }>('/products/' + id)
 }
 
 export const getProductsRequestParams = (filters: IProductFilters) => {
-  const params: Record<string, unknown> = {
-    populate: 'image',
-  }
+  const params: Record<string, unknown> = {}
 
   if (filters.category !== 'all') {
     params['filters[category][$eq]'] = filters.category

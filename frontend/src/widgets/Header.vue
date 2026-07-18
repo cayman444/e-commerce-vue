@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ROUTES_PATHS } from '@/app/router'
+import { ROUTES_PATHS, router } from '@/app/router'
 import { Menu, Settings, ShoppingBag, UserRound } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
 
@@ -15,7 +15,12 @@ const ROUTES = [
     class="py-8 border-b border-b-tertiary/10 transition-all duration-300 bg-neutral text-secondary"
   >
     <div class="flex justify-between items-center w-full max-w-[1440px] mx-auto px-8 md:px-16">
-      <h2 class="font-display text-2xl leading-8 uppercase">Archive</h2>
+      <h2
+        class="font-display text-2xl leading-8 uppercase cursor-pointer"
+        @click="router.push(ROUTES_PATHS.CATALOG)"
+      >
+        Archive
+      </h2>
       <nav class="hidden md:flex">
         <ul class="flex items-center gap-10 uppercase">
           <li v-for="{ text, to } in ROUTES" :key="to">
