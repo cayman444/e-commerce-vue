@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { cn } from '@/shared/lib/utils.ts'
 import { Carousel, CarouselContent, CarouselItem, useCarouselControls } from '@/shared/ui/carousel'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { IProduct } from '../model/types'
 
 const { product } = defineProps<{
@@ -9,6 +9,9 @@ const { product } = defineProps<{
 }>()
 
 const { activeIndex, selectSlide } = useCarouselControls('carousel-ref')
+
+const loadedImages = ref<Record<number, boolean>>({})
+const loadedThumbs = ref<Record<number, boolean>>({})
 
 const gridColsClass = computed(() => {
   const count = product.images.length
@@ -34,7 +37,9 @@ const gridColsClass = computed(() => {
             <img
               :src="imgUrl"
               :alt="product.name"
-              class="w-full h-full object-cover mix-blend-multiply"
+              @load="loadedImages[index] = true"
+              class="w-full h-full object-cover mix-blend-multiply transition-all duration-700 ease-out"
+              :class="loadedImages[index] ? 'opacity-100' : 'opacity-0'"
             />
           </div>
         </CarouselItem>
@@ -53,7 +58,13 @@ const gridColsClass = computed(() => {
           )
         "
       >
-        <img :src="imgUrl" :alt="product.name" class="w-full h-full object-cover" />
+        <img
+          :src="imgUrl"
+          :alt="product.name"
+          @load="loadedThumbs[index] = true"
+          class="w-full h-full object-cover transition-opacity duration-500"
+          :class="loadedThumbs[index] ? 'opacity-100' : 'opacity-0'"
+        />
       </button>
     </div>
   </div>

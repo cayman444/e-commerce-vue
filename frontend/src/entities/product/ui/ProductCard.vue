@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { formatPrice } from '@/shared/lib/utils'
+import { ref } from 'vue'
 import { CATEGORY_LABELS } from '../model/constants'
 import type { IProduct } from '../model/types'
 
 defineProps<{
   product: IProduct
 }>()
+
+const isLoaded = ref(false)
 </script>
 
 <template>
@@ -20,7 +23,9 @@ defineProps<{
         <img
           :src="product.image"
           :alt="product.name"
-          class="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700 ease-out"
+          @load="isLoaded = true"
+          class="w-full h-full object-cover mix-blend-multiply transition-all duration-700 ease-out"
+          :class="isLoaded ? 'opacity-100 group-hover:scale-105' : 'opacity-0'"
         />
       </div>
       <div class="flex flex-col gap-1.5 px-1">
