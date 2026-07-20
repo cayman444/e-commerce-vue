@@ -1,11 +1,34 @@
 <script setup lang="ts">
+import { router } from '@/app/router'
+import { useCartStore } from '@/entities/cart'
 import { ProductList, useProductStore } from '@/entities/product'
+import type { IProduct } from '@/entities/product'
 import { FiltersProducts } from '@/features/filter-products'
+import { formatPrice } from '@/shared/lib/utils'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
+import { toast } from 'vue-sonner'
 
 const productStore = useProductStore()
 const { products, isLoading, error } = storeToRefs(productStore)
+
+const cartStore = useCartStore()
+
+const handleAddToCart = (product: IProduct) => {
+  cartStore.addToCart({
+    productId: product.id,
+    priceForOne: product.price,
+    name: product.name,
+    image: product.image,
+  })
+  toast.success(`${product.name} добавлен в корзину`, {
+    description: formatPrice(product.price),
+    action: {
+      label: 'В корзину',
+      onClick: () => router.push('/cart'),
+    },
+  })
+}
 
 onMounted(() => productStore.fetchProducts())
 </script>
@@ -20,6 +43,6 @@ onMounted(() => productStore.fetchProducts())
       </p>
     </div>
     <FiltersProducts />
-    <ProductList :products :isLoading :error />
+    <ProductList :products :isLoading :error @add-to-cart="handleAddToCart" />
   </div>
 </template>

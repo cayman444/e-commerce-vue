@@ -5,6 +5,10 @@ import ProductCardSkeleton from './ProductCardSkeleton.vue'
 import ProductListError from './ProductListError.vue'
 
 defineProps<{ products: IProduct[]; isLoading: boolean; error: string | null }>()
+
+const emit = defineEmits<{
+  (e: 'addToCart', product: IProduct): void
+}>()
 </script>
 
 <template>
@@ -19,7 +23,12 @@ defineProps<{ products: IProduct[]; isLoading: boolean; error: string | null }>(
       :class="{ 'opacity-50 pointer-events-none': isLoading }"
     >
       <TransitionGroup name="list">
-        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+        <ProductCard
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+          @add-to-cart="emit('addToCart', product)"
+        />
       </TransitionGroup>
     </ul>
   </Transition>

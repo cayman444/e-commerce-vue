@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { formatPrice } from '@/shared/lib/utils'
+import { Button } from '@/shared/ui'
+import { ShoppingBag } from '@lucide/vue'
 import { ref } from 'vue'
 import { CATEGORY_LABELS } from '../model/constants'
 import type { IProduct } from '../model/types'
 
 defineProps<{
   product: IProduct
+}>()
+
+const emit = defineEmits<{
+  (e: 'addToCart'): void
 }>()
 
 const isLoaded = ref(false)
@@ -27,6 +33,18 @@ const isLoaded = ref(false)
           class="w-full h-full object-cover mix-blend-multiply transition-all duration-700 ease-out"
           :class="isLoaded ? 'opacity-100 group-hover:scale-105' : 'opacity-0'"
         />
+        <div
+          class="absolute bottom-4 left-4 right-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out z-10"
+        >
+          <Button
+            variant="secondary"
+            class="w-full rounded-none h-11 text-xs uppercase tracking-wider bg-secondary text-neutral hover:opacity-90 shadow-md flex items-center justify-center gap-2 cursor-pointer border-0"
+            @click.stop.prevent="emit('addToCart')"
+          >
+            <ShoppingBag :size="14" />
+            В корзину
+          </Button>
+        </div>
       </div>
       <div class="flex flex-col gap-1.5 px-1">
         <span class="font-sans text-xs uppercase text-tertiary tracking-widest">
