@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { router } from '@/app/router'
 import { formatPrice } from '@/shared/lib/utils'
 import { Minus, Plus, Trash2 } from '@lucide/vue'
 import type { IProductsToCart } from '../model/types'
@@ -18,7 +19,10 @@ defineEmits<{
   <div
     class="flex items-center justify-between gap-4 py-6 border-b border-b-secondary/10 last:border-0"
   >
-    <div class="flex items-center gap-4 grow">
+    <div
+      class="flex items-center gap-4 grow cursor-pointer"
+      @click="router.push({ name: 'product-details', params: { id: item.productId } })"
+    >
       <div
         class="w-20 h-24 bg-neutral border border-secondary/10 overflow-hidden shrink-0 flex items-center justify-center"
       >

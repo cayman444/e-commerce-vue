@@ -1,14 +1,29 @@
 <script setup lang="ts">
+import { router } from '@/app/router'
 import { formatPrice } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui'
+import { toast } from 'vue-sonner'
 import type { IProduct } from '../model/types'
 import ProductAccordion from './ProductAccordion.vue'
 
-defineProps<{ product: IProduct }>()
+const { product } = defineProps<{
+  product: IProduct
+}>()
 
 const emit = defineEmits<{
   (e: 'addToCart'): void
 }>()
+
+const addToCart = () => {
+  emit('addToCart')
+  toast.success(`${product.name} добавлен в корзину`, {
+    description: formatPrice(product.price),
+    action: {
+      label: 'В корзину',
+      onClick: () => router.push('/cart'),
+    },
+  })
+}
 </script>
 
 <template>
@@ -29,9 +44,13 @@ const emit = defineEmits<{
       </li>
     </ul>
     <div class="flex flex-col gap-4">
-      <Button variant="secondary" size="lg" @click="emit('addToCart')">В корзину</Button>
+      <Button variant="secondary" size="lg" @click="addToCart">
+        В корзину
+      </Button>
       <Button variant="outline" size="lg">В избранное</Button>
     </div>
     <ProductAccordion :accordions="product.accordions" />
   </div>
 </template>
+
+
