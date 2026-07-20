@@ -1,5 +1,6 @@
 export { useCartStore } from './model/store'
+export type { IAddToCart, IProductsToCart } from './model/types'
 export { default as CartList } from './ui/CartList.vue'
 export { default as CartSummary } from './ui/CartSummary.vue'
-export type { IProductsToCart } from './model/types'
-
+export { default as CartItemSkeleton } from './ui/CartItemSkeleton.vue'
+export { default as CartListError } from './ui/CartListError.vue'
