@@ -5,6 +5,10 @@ import type { IProduct } from '../model/types'
 import ProductAccordion from './ProductAccordion.vue'
 
 defineProps<{ product: IProduct }>()
+
+const emit = defineEmits<{
+  (e: 'addToCart'): void
+}>()
 </script>
 
 <template>
@@ -25,7 +29,7 @@ defineProps<{ product: IProduct }>()
       </li>
     </ul>
     <div class="flex flex-col gap-4">
-      <Button variant="secondary" size="lg">В корзину</Button>
+      <Button variant="secondary" size="lg" @click="emit('addToCart')">В корзину</Button>
       <Button variant="outline" size="lg">В избранное</Button>
     </div>
     <ProductAccordion :accordions="product.accordions" />

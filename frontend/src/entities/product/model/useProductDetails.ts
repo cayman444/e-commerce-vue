@@ -1,3 +1,4 @@
+import { useCartStore } from '@/entities/cart'
 import { mapStrapiProductToProduct } from '@/shared/lib/utils'
 import { useAsyncState } from '@vueuse/core'
 import { isAxiosError } from 'axios'
@@ -23,6 +24,19 @@ export function useProductDetails(idSource: () => string) {
     },
   )
 
+  const cartStore = useCartStore()
+
+  const handleAddToCart = () => {
+    if (product.value) {
+      cartStore.addToCart({
+        productId: product.value.id,
+        priceForOne: product.value.price,
+        name: product.value.name,
+        image: product.value.image,
+      })
+    }
+  }
+
   const error = computed(() => {
     if (!rawError.value) return null
     return isAxiosError(rawError.value) ? rawError.value.message : 'Не удалось загрузить товар'
@@ -36,5 +50,6 @@ export function useProductDetails(idSource: () => string) {
     product,
     isLoading,
     error,
+    handleAddToCart,
   }
 }

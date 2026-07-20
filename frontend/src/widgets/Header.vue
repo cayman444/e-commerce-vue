@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ROUTES_PATHS, router } from '@/app/router'
+import { useCartStore } from '@/entities/cart'
 import { Menu, Settings, ShoppingBag, UserRound } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
 
@@ -8,13 +9,15 @@ const ROUTES = [
   { to: ROUTES_PATHS.ABOUT, text: 'О нас' },
   { to: ROUTES_PATHS.JOURNAL, text: 'Журнал' },
 ] as const
+
+const cartStore = useCartStore()
 </script>
 
 <template>
   <header
     class="py-8 border-b border-b-tertiary/10 transition-all duration-300 bg-neutral text-secondary"
   >
-    <div class="flex justify-between items-center w-full max-w-[1440px] mx-auto px-8 md:px-16">
+    <div class="flex justify-between items-center w-full max-w-360 mx-auto px-8 md:px-16">
       <h2
         class="font-display text-2xl leading-8 uppercase cursor-pointer"
         @click="router.push(ROUTES_PATHS.CATALOG)"
@@ -41,8 +44,14 @@ const ROUTES = [
         <button class="hover:opacity-70">
           <Settings :size="20" />
         </button>
-        <button class="hover:opacity-70">
+        <button class="hover:opacity-70 relative" @click="router.push(ROUTES_PATHS.CART)">
           <ShoppingBag :size="20" />
+          <span
+            v-if="cartStore.totalCount > 0"
+            class="absolute -top-1.5 -right-1.5 bg-primary text-neutral text-[10px] font-bold rounded-full size-4 flex items-center justify-center font-sans"
+          >
+            {{ cartStore.totalCount }}
+          </span>
         </button>
         <button class="hover:opacity-70 block md:hidden">
           <Menu :size="20" />

@@ -1,4 +1,4 @@
-import { About, Catalog, Journal, Product } from '@/pages'
+import { About, Cart, Catalog, Journal, Product } from '@/pages'
 import { createRouter, createWebHistory } from 'vue-router'
 
 export const ROUTES_PATHS = {
@@ -8,6 +8,7 @@ export const ROUTES_PATHS = {
   ABOUT: '/about',
   JOURNAL: '/journal',
   PRODUCT: '/products/:id',
+  CART: '/cart',
 } as const
 
 export const router = createRouter({
@@ -17,5 +18,7 @@ export const router = createRouter({
     { path: ROUTES_PATHS.ABOUT, component: About },
     { path: ROUTES_PATHS.JOURNAL, component: Journal },
     { path: ROUTES_PATHS.PRODUCT, name: 'product-details', component: Product },
+    { path: ROUTES_PATHS.CART, component: Cart },
   ],
 })
+
