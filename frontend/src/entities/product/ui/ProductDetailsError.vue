@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div
-    class="flex flex-col items-center justify-center min-h-[400px] text-center px-4 max-w-md mx-auto gap-6"
+    class="flex flex-col items-center justify-center min-h-100 text-center px-4 max-w-md mx-auto gap-6"
   >
     <div class="p-4 bg-primary/5 rounded-full text-primary">
       <AlertTriangle class="w-8 h-8" />

@@ -35,7 +35,8 @@ export interface IProduct {
 export interface IProductFilters {
   category: TCategory
   search: string
-  price: IPriceRange
+  minPrice: number | null
+  maxPrice: number | null
   sort: TSort
   inStock: boolean
 }

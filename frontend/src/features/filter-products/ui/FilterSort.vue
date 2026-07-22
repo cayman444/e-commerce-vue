@@ -33,7 +33,7 @@ const selectSort = (val: TSort) => {
         />
       </div>
     </PopoverTrigger>
-    <PopoverContent class="min-w-[220px] py-2 flex flex-col gap-0">
+    <PopoverContent class="min-w-55 py-2 flex flex-col gap-0">
       <button
         v-for="opt in SORT_OPTIONS"
         :key="opt.value"

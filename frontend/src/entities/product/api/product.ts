@@ -1,6 +1,5 @@
 import { apiInstance } from '@/shared/api/client'
-import type { IStrapiProduct, IStrapiResponse } from '../model/types'
-import type { IProductFilters } from '../model/types'
+import type { IProductFilters, IStrapiProduct, IStrapiResponse, TSort } from '../model/types'
 
 export const getProductsList = (params: Record<string, unknown>) => {
   return apiInstance.get<IStrapiResponse<IStrapiProduct>>('/products', { params })
@@ -21,14 +20,14 @@ export const getProductsRequestParams = (filters: IProductFilters) => {
     params['filters[name][$containsi]'] = filters.search
   }
 
-  params['filters[price][$gte]'] = filters.price.min || undefined
-  params['filters[price][$lte]'] = filters.price.max || undefined
+  params['filters[price][$gte]'] = filters.minPrice || undefined
+  params['filters[price][$lte]'] = filters.maxPrice || undefined
 
   if (filters.inStock) {
     params['filters[inStock][$eq]'] = true
   }
 
-  const sortMap: Record<typeof filters.sort, string> = {
+  const sortMap: Record<TSort, string> = {
     'price-asc': 'price:asc',
     'price-desc': 'price:desc',
     newest: 'createdAt:desc',

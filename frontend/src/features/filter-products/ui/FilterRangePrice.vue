@@ -32,7 +32,7 @@ const { localRange, isOpen, applyPrice } = useFilterRangePrice(
         />
       </div>
     </PopoverTrigger>
-    <PopoverContent class="min-w-[280px] p-6 flex flex-col gap-4">
+    <PopoverContent class="min-w-70 p-6 flex flex-col gap-4">
       <div
         class="flex justify-between text-xs text-tertiary font-semibold uppercase tracking-wider"
       >
