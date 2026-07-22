@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ROUTES_PATHS } from '@/app/router'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,7 +23,7 @@ defineProps<{
     <BreadcrumbList class="gap-1.5 sm:gap-2">
       <BreadcrumbItem>
         <BreadcrumbLink as-child class="text-tertiary hover:text-secondary transition-colors">
-          <RouterLink to="/">Главная</RouterLink>
+          <RouterLink :to="ROUTES_PATHS.CATALOG">Главная</RouterLink>
         </BreadcrumbLink>
       </BreadcrumbItem>
       <template v-if="isLoading">
@@ -39,7 +40,12 @@ defineProps<{
         <BreadcrumbSeparator>/</BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink as-child class="text-tertiary hover:text-secondary transition-colors">
-            <RouterLink :to="`/catalog?category=${product.category}`">
+            <RouterLink
+              :to="{
+                path: ROUTES_PATHS.CATALOG,
+                query: { category: product.category },
+              }"
+            >
               {{ CATEGORY_LABELS[product.category] }}
             </RouterLink>
           </BreadcrumbLink>
