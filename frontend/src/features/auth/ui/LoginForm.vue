@@ -2,28 +2,11 @@
 import { ROUTES_PATHS } from '@/app/router'
 import { Button } from '@/shared/ui'
 import { FormField } from '@/shared/ui/form-filed'
-import { toTypedSchema } from '@vee-validate/zod'
-import { useForm } from 'vee-validate'
+import { Loader2 } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
-import { z } from 'zod'
+import { useLoginForm } from '../model/useLoginForm'
 
-const schema = toTypedSchema(
-  z.object({
-    email: z.string().nonempty('Поле обязательно').email('Некорректный email'),
-    password: z.string().nonempty('Поле обязательно').min(6, 'Минимум 6 символов'),
-  }),
-)
-
-const { errors, defineField, handleSubmit, meta } = useForm({
-  validationSchema: schema,
-})
-
-const [email, emailProps] = defineField('email')
-const [password, passwordProps] = defineField('password')
-
-const submitForm = handleSubmit((values) => {
-  console.log('Успешная отправка:', values)
-})
+const { email, emailProps, password, passwordProps, errors, isLoading, submitForm } = useLoginForm()
 </script>
 
 <template>
@@ -52,12 +35,15 @@ const submitForm = handleSubmit((values) => {
           v-bind="passwordProps"
           :error="errors.password"
         />
-        <Button size="lg" class="mt-4" :disabled="!meta.valid">Войти</Button>
+        <Button size="lg" class="mt-4 flex items-center justify-center gap-2" :disabled="isLoading">
+          <Loader2 v-if="isLoading" class="animate-spin" :size="16" />
+          <span>{{ isLoading ? 'Вход...' : 'Войти' }}</span>
+        </Button>
         <div class="space-x-2 text-center text-sm">
           <span class="text-tertiary">Нет аккаунта?</span>
           <RouterLink
             :to="ROUTES_PATHS.REGISTER"
-            class="transition-all hover:opacity-70 font-medium"
+            class="transition-all hover:text-primary font-medium"
           >
             Создать аккаунт
           </RouterLink>
