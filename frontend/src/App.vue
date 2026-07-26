@@ -1,5 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { MainLayout } from './app/layouts'
+import { useUserStore } from './entities/user'
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.initAuth()
+})
 </script>
 
 <template>
