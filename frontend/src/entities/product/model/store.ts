@@ -72,7 +72,6 @@ export const useProductStore = defineStore('productStore', () => {
     () => {
       fetchProducts()
     },
-    { immediate: true },
   )
 
   return {

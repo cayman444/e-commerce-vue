@@ -12,6 +12,7 @@ export const registerApi = (payload: IRegisterPayload) => {
 export const refreshTokenApi = () => {
   return apiInstance.post<{ jwt: string }>('/auth/refresh')
 }
+
 export const getMeApi = () => {
   return apiInstance.get<IUser>('/users/me')
 }

@@ -11,11 +11,15 @@ const { email, emailProps, password, passwordProps, errors, isLoading, formError
 </script>
 
 <template>
-  <div class="bg-neutral border border-tertiary/20 p-8 sm:p-12 w-full max-w-md">
+  <div class="bg-neutral border border-secondary/10 p-8 sm:p-12 w-full max-w-md rounded-none">
     <form class="flex flex-col gap-10" @submit.prevent="submitForm">
       <div class="text-center">
-        <h1 class="uppercase font-display text-3xl">Вход в систему</h1>
-        <p class="text-sm text-tertiary mt-2">Добро пожаловать в Archive Interior</p>
+        <h1 class="uppercase font-display text-3xl tracking-wider text-secondary">
+          Вход в систему
+        </h1>
+        <p class="text-xs uppercase tracking-widest text-tertiary mt-2">
+          Добро пожаловать в Archive Interior
+        </p>
       </div>
       <div class="flex flex-col gap-6">
         <FormField
@@ -43,9 +47,11 @@ const { email, emailProps, password, passwordProps, errors, isLoading, formError
           <AlertCircle :size="16" class="shrink-0 text-red-600" />
           <span>{{ formError }}</span>
         </div>
+      </div>
+      <div class="flex flex-col gap-6">
         <Button
           size="lg"
-          class="w-full h-12 rounded-none text-xs uppercase tracking-widest bg-secondary text-neutral hover:opacity-90 transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer"
+          class="w-full h-12 rounded-none text-xs uppercase tracking-widest bg-secondary text-neutral hover:opacity-90 transition-all flex items-center justify-center gap-2 cursor-pointer"
           :disabled="isLoading"
         >
           <Loader2 v-if="isLoading" class="animate-spin" :size="16" />

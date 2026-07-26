@@ -7,10 +7,10 @@ export const apiInstance = axios.create({
 })
 
 apiInstance.interceptors.request.use((config) => {
-  const { accessToken } = useUserStore()
+  const userStore = useUserStore()
 
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`
+  if (userStore.accessToken) {
+    config.headers.Authorization = `Bearer ${userStore.accessToken}`
   }
 
   return config
