@@ -3,10 +3,10 @@ import { onMounted } from 'vue'
 import { MainLayout } from './app/layouts'
 import { useUserStore } from './entities/user'
 
-const userStore = useUserStore()
+const { initAuth } = useUserStore()
 
 onMounted(() => {
-  userStore.initAuth()
+  initAuth()
 })
 </script>
 

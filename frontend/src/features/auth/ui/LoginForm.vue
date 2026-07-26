@@ -6,7 +6,8 @@ import { Loader2 } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
 import { useLoginForm } from '../model/useLoginForm'
 
-const { email, emailProps, password, passwordProps, errors, isLoading, submitForm } = useLoginForm()
+const { email, emailProps, password, passwordProps, errors, isLoading, formError, submitForm } =
+  useLoginForm()
 </script>
 
 <template>
@@ -35,7 +36,13 @@ const { email, emailProps, password, passwordProps, errors, isLoading, submitFor
           v-bind="passwordProps"
           :error="errors.password"
         />
-        <Button size="lg" class="mt-4 flex items-center justify-center gap-2" :disabled="isLoading">
+        <div
+          v-if="formError"
+          class="p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-medium tracking-wide text-center"
+        >
+          {{ formError }}
+        </div>
+        <Button size="lg" class="flex items-center justify-center gap-2" :disabled="isLoading">
           <Loader2 v-if="isLoading" class="animate-spin" :size="16" />
           <span>{{ isLoading ? 'Вход...' : 'Войти' }}</span>
         </Button>

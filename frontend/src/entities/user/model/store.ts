@@ -11,25 +11,19 @@ export const useUserStore = defineStore('user', () => {
   const isAuthenticated = computed(() => !!accessToken.value && !!user.value)
 
   const login = async (payload: ILoginPayload) => {
-    try {
-      const { data } = await loginApi(payload)
-      user.value = data.user
-      accessToken.value = data.jwt
-      return data
-    } catch (err) {
-      throw err
-    }
+    const { data } = await loginApi(payload)
+    user.value = data.user
+    accessToken.value = data.jwt
+
+    return data
   }
 
   const register = async (payload: IRegisterPayload) => {
-    try {
-      const { data } = await registerApi(payload)
-      user.value = data.user
-      accessToken.value = data.jwt
-      return data
-    } catch (err) {
-      throw err
-    }
+    const { data } = await registerApi(payload)
+    user.value = data.user
+    accessToken.value = data.jwt
+
+    return data
   }
 
   const initAuth = async () => {
