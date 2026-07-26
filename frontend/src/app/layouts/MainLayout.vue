@@ -7,7 +7,7 @@ import { Footer, Header } from '@/widgets'
   <div class="min-h-screen flex flex-col bg-neutral text-secondary">
     <Toaster />
     <Header />
-    <main class="grow w-full max-w-360 mx-auto">
+    <main class="grow flex flex-col w-full max-w-360 mx-auto">
       <slot />
     </main>
     <Footer />

@@ -38,7 +38,7 @@ const cartStore = useCartStore()
         </ul>
       </nav>
       <div class="flex items-center gap-6 [&>button]:cursor-pointer [&>button]:transition-opacity">
-        <button class="hover:opacity-70">
+        <button class="hover:opacity-70" @click="router.push(ROUTES_PATHS.LOGIN)">
           <UserRound :size="20" />
         </button>
         <button class="hover:opacity-70">
