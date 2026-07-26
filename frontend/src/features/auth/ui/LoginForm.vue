@@ -2,7 +2,7 @@
 import { ROUTES_PATHS } from '@/app/router'
 import { Button } from '@/shared/ui'
 import { FormField } from '@/shared/ui/form-filed'
-import { Loader2 } from '@lucide/vue'
+import { AlertCircle, Loader2 } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
 import { useLoginForm } from '../model/useLoginForm'
 
@@ -38,19 +38,24 @@ const { email, emailProps, password, passwordProps, errors, isLoading, formError
         />
         <div
           v-if="formError"
-          class="p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-medium tracking-wide text-center"
+          class="flex items-center gap-3 p-4 bg-red-500/5 border border-red-500/20 border-l-2 border-l-red-600 text-red-600 text-xs font-medium tracking-wide rounded-none"
         >
-          {{ formError }}
+          <AlertCircle :size="16" class="shrink-0 text-red-600" />
+          <span>{{ formError }}</span>
         </div>
-        <Button size="lg" class="flex items-center justify-center gap-2" :disabled="isLoading">
+        <Button
+          size="lg"
+          class="w-full h-12 rounded-none text-xs uppercase tracking-widest bg-secondary text-neutral hover:opacity-90 transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer"
+          :disabled="isLoading"
+        >
           <Loader2 v-if="isLoading" class="animate-spin" :size="16" />
           <span>{{ isLoading ? 'Вход...' : 'Войти' }}</span>
         </Button>
-        <div class="space-x-2 text-center text-sm">
-          <span class="text-tertiary">Нет аккаунта?</span>
+        <div class="text-center text-xs tracking-wider text-tertiary">
+          <span>Нет аккаунта? </span>
           <RouterLink
             :to="ROUTES_PATHS.REGISTER"
-            class="transition-all hover:text-primary font-medium"
+            class="text-secondary font-semibold underline underline-offset-4 hover:opacity-70 transition-opacity ml-1"
           >
             Создать аккаунт
           </RouterLink>
