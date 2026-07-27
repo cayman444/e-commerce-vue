@@ -40,6 +40,7 @@ const inputType = computed(() => {
         :id="id"
         :type="inputType"
         :placeholder="placeholder"
+        autocomplete="on"
         :model-value="modelValue"
         @update:model-value="(val) => emit('update:modelValue', val)"
         :class="{ 'pr-10': type === 'password' }"

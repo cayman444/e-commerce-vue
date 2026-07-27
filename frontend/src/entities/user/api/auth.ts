@@ -9,6 +9,10 @@ export const registerApi = (payload: IRegisterPayload) => {
   return apiInstance.post<IAuthResponse>('/auth/local/register', payload)
 }
 
+export const logoutApi = () => {
+  return apiInstance.post<{ ok: boolean }>('/auth/logout')
+}
+
 export const refreshTokenApi = () => {
   return apiInstance.post<{ jwt: string }>('/auth/refresh')
 }

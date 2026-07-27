@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { getMeApi, loginApi, refreshTokenApi, registerApi } from '../api/auth'
+import { getMeApi, loginApi, logoutApi, refreshTokenApi, registerApi } from '../api/auth'
 import type { ILoginPayload, IRegisterPayload, IUser } from './types'
 
 export const useUserStore = defineStore('user', () => {
@@ -42,9 +42,13 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  const logout = () => {
-    user.value = null
-    accessToken.value = null
+  const logout = async () => {
+    try {
+      await logoutApi()
+    } finally {
+      user.value = null
+      accessToken.value = null
+    }
   }
 
   return {

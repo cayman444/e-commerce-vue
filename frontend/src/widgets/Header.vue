@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ROUTES_PATHS, router } from '@/app/router'
 import { useCartStore } from '@/entities/cart'
-import { Menu, Settings, ShoppingBag, UserRound } from '@lucide/vue'
+import { UserProfile, useUserStore } from '@/entities/user'
+import { getStrapiErrorMessage } from '@/shared/lib/utils'
+import { Menu, ShoppingBag, UserRound } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
+import { toast } from 'vue-sonner'
 
 const ROUTES = [
   { to: ROUTES_PATHS.CATALOG, text: 'Каталог' },
@@ -11,6 +14,17 @@ const ROUTES = [
 ] as const
 
 const cartStore = useCartStore()
+const userStore = useUserStore()
+
+const handleLogout = async () => {
+  try {
+    await userStore.logout()
+    toast.success('Вы вышли из системы')
+    router.push(ROUTES_PATHS.CATALOG)
+  } catch (err) {
+    toast.error(getStrapiErrorMessage(err, 'Не удалось выйти из системы'))
+  }
+}
 </script>
 
 <template>
@@ -19,7 +33,7 @@ const cartStore = useCartStore()
   >
     <div class="flex justify-between items-center w-full max-w-360 mx-auto px-8 md:px-16">
       <h2
-        class="font-display text-2xl leading-8 uppercase cursor-pointer"
+        class="font-display text-2xl leading-8 uppercase cursor-pointer tracking-wider"
         @click="router.push(ROUTES_PATHS.CATALOG)"
       >
         Archive
@@ -38,11 +52,18 @@ const cartStore = useCartStore()
         </ul>
       </nav>
       <div class="flex items-center gap-6 [&>button]:cursor-pointer [&>button]:transition-opacity">
-        <button class="hover:opacity-70" @click="router.push(ROUTES_PATHS.LOGIN)">
+        <UserProfile
+          v-if="userStore.isAuthenticated"
+          :user="userStore.user"
+          @logout="handleLogout"
+        />
+        <button
+          v-else
+          class="hover:opacity-70 cursor-pointer transition-opacity"
+          title="Войти"
+          @click="router.push(ROUTES_PATHS.LOGIN)"
+        >
           <UserRound :size="20" />
-        </button>
-        <button class="hover:opacity-70">
-          <Settings :size="20" />
         </button>
         <button class="hover:opacity-70 relative" @click="router.push(ROUTES_PATHS.CART)">
           <ShoppingBag :size="20" />
