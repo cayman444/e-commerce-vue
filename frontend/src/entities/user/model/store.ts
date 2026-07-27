@@ -9,6 +9,9 @@ export const useUserStore = defineStore('user', () => {
   const isInitialLoading = ref(true)
 
   const isAuthenticated = computed(() => !!accessToken.value && !!user.value)
+  const isAdmin = computed(
+    () => user.value?.role?.type === 'admin' || user.value?.username === 'admin',
+  )
 
   const login = async (payload: ILoginPayload) => {
     const { data } = await loginApi(payload)
@@ -56,6 +59,7 @@ export const useUserStore = defineStore('user', () => {
     accessToken,
     isInitialLoading,
     isAuthenticated,
+    isAdmin,
     login,
     register,
     initAuth,

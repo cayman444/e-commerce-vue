@@ -2,6 +2,7 @@ import { ROUTES_PATHS } from '@/app/router'
 import { useCartStore } from '@/entities/cart'
 import { useUserStore } from '@/entities/user'
 import { getStrapiErrorMessage } from '@/shared/lib/utils'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 
@@ -15,6 +16,9 @@ export const useHeader = () => {
   const router = useRouter()
   const cartStore = useCartStore()
   const userStore = useUserStore()
+
+  const { totalCount } = storeToRefs(cartStore)
+  const { isAuthenticated, isAdmin, isInitialLoading, user } = storeToRefs(userStore)
 
   const handleLogout = async () => {
     try {
@@ -32,8 +36,11 @@ export const useHeader = () => {
 
   return {
     navigation: HEADER_NAVIGATION,
-    userStore,
-    cartStore,
+    isAuthenticated,
+    isAdmin,
+    isInitialLoading,
+    user,
+    totalCount,
     handleLogout,
     navigateToLogin,
     navigateToCart,

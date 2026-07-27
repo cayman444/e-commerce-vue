@@ -7,8 +7,11 @@ import { useHeader } from '../model/useHeader'
 
 const {
   navigation,
-  userStore,
-  cartStore,
+  isAdmin,
+  isAuthenticated,
+  isInitialLoading,
+  user,
+  totalCount,
   handleLogout,
   navigateToLogin,
   navigateToCart,
@@ -41,10 +44,11 @@ const {
         </ul>
       </nav>
       <div class="flex items-center gap-6 [&>button]:cursor-pointer [&>button]:transition-opacity">
-        <Skeleton v-if="userStore.isInitialLoading" class="size-5 rounded-full bg-tertiary/20" />
+        <Skeleton v-if="isInitialLoading" class="size-5 rounded-full bg-tertiary/20" />
         <UserProfile
-          v-else-if="userStore.isAuthenticated"
-          :user="userStore.user"
+          v-else-if="isAuthenticated"
+          :user="user"
+          :is-admin="isAdmin"
           @logout="handleLogout"
         />
         <button
@@ -58,10 +62,10 @@ const {
         <button class="hover:opacity-70 relative" title="Корзина" @click="navigateToCart">
           <ShoppingBag :size="20" />
           <span
-            v-if="cartStore.totalCount > 0"
+            v-if="totalCount > 0"
             class="absolute -top-1.5 -right-1.5 bg-primary text-neutral text-[10px] font-bold rounded-full size-4 flex items-center justify-center font-sans"
           >
-            {{ cartStore.totalCount }}
+            {{ totalCount }}
           </span>
         </button>
         <button class="hover:opacity-70 block md:hidden" title="Меню">

@@ -9,6 +9,8 @@ export const ROUTES_PATHS = {
   JOURNAL: '/journal',
   PRODUCT: '/products/:id',
   CART: '/cart',
+  PROFILE: '/profile',
+  ADMIN: '/admin',
 } as const
 
 export const router = createRouter({

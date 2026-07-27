@@ -9,6 +9,11 @@ export interface IUser {
   createdAt: string
   updatedAt: string
   publishedAt: string
+  role?: {
+    id: number
+    name: string
+    type: string
+  }
 }
 
 export interface IAuthResponse {
