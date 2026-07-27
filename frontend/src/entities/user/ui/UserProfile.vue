@@ -4,7 +4,9 @@ import { LogOut, UserRound } from '@lucide/vue'
 import type { IUser } from '../model/types'
 
 defineProps<{ user: IUser | null }>()
-defineEmits(['logout'])
+const emit = defineEmits<{
+  (e: 'logout'): void
+}>()
 </script>
 
 <template>
@@ -28,7 +30,7 @@ defineEmits(['logout'])
       </div>
       <div class="p-1 flex flex-col gap-0.5">
         <button
-          @click="$emit('logout')"
+          @click="emit('logout')"
           class="w-full flex items-center justify-between px-3 py-2.5 text-xs text-red-600 hover:bg-red-500/5 transition-colors cursor-pointer rounded-none border-0 text-left font-medium uppercase tracking-wider"
         >
           <span>Выйти</span>

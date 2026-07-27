@@ -1,31 +1,19 @@
 <script setup lang="ts">
-import { ROUTES_PATHS, router } from '@/app/router'
-import { useCartStore } from '@/entities/cart'
-import { UserProfile, useUserStore } from '@/entities/user'
-import { getStrapiErrorMessage } from '@/shared/lib/utils'
+import { UserProfile } from '@/entities/user'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { Menu, ShoppingBag, UserRound } from '@lucide/vue'
 import { RouterLink } from 'vue-router'
-import { toast } from 'vue-sonner'
+import { useHeader } from '../model/useHeader'
 
-const ROUTES = [
-  { to: ROUTES_PATHS.CATALOG, text: 'Каталог' },
-  { to: ROUTES_PATHS.ABOUT, text: 'О нас' },
-  { to: ROUTES_PATHS.JOURNAL, text: 'Журнал' },
-] as const
-
-const cartStore = useCartStore()
-const userStore = useUserStore()
-
-const handleLogout = async () => {
-  try {
-    await userStore.logout()
-    toast.success('Вы вышли из системы')
-    router.push(ROUTES_PATHS.CATALOG)
-  } catch (err) {
-    toast.error(getStrapiErrorMessage(err, 'Не удалось выйти из системы'))
-  }
-}
+const {
+  navigation,
+  userStore,
+  cartStore,
+  handleLogout,
+  navigateToLogin,
+  navigateToCart,
+  navigateToCatalog,
+} = useHeader()
 </script>
 
 <template>
@@ -34,18 +22,18 @@ const handleLogout = async () => {
   >
     <div class="flex justify-between items-center w-full max-w-360 mx-auto px-8 md:px-16">
       <h2
-        class="font-display text-2xl leading-8 uppercase cursor-pointer tracking-wider"
-        @click="router.push(ROUTES_PATHS.CATALOG)"
+        class="font-display text-2xl leading-8 uppercase cursor-pointer tracking-wider select-none"
+        @click="navigateToCatalog"
       >
         Archive
       </h2>
       <nav class="hidden md:flex">
         <ul class="flex items-center gap-10 uppercase">
-          <li v-for="{ text, to } in ROUTES" :key="to">
+          <li v-for="{ text, to } in navigation" :key="to">
             <RouterLink
               class="nav-link transition-all cursor-pointer font-semibold tracking-wider hover:opacity-70"
               exact-active-class="active text-primary pointer-events-none"
-              :to
+              :to="to"
             >
               {{ text }}
             </RouterLink>
@@ -63,15 +51,11 @@ const handleLogout = async () => {
           v-else
           class="hover:opacity-70 cursor-pointer transition-opacity"
           title="Войти"
-          @click="router.push(ROUTES_PATHS.LOGIN)"
+          @click="navigateToLogin"
         >
           <UserRound :size="20" />
         </button>
-        <button
-          class="hover:opacity-70 relative"
-          title="Корзина"
-          @click="router.push(ROUTES_PATHS.CART)"
-        >
+        <button class="hover:opacity-70 relative" title="Корзина" @click="navigateToCart">
           <ShoppingBag :size="20" />
           <span
             v-if="cartStore.totalCount > 0"
@@ -80,7 +64,7 @@ const handleLogout = async () => {
             {{ cartStore.totalCount }}
           </span>
         </button>
-        <button class="hover:opacity-70 block md:hidden">
+        <button class="hover:opacity-70 block md:hidden" title="Меню">
           <Menu :size="20" />
         </button>
       </div>
