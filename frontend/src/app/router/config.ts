@@ -1,3 +1,4 @@
+import { useUserStore } from '@/entities/user'
 import { About, Cart, Catalog, Journal, Login, Product, Register } from '@/pages'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -24,4 +25,15 @@ export const router = createRouter({
     { path: ROUTES_PATHS.LOGIN, component: Login },
     { path: ROUTES_PATHS.REGISTER, component: Register },
   ],
+})
+
+router.beforeEach((to) => {
+  const { isAuthenticated, isAdmin } = useUserStore()
+
+  if (
+    (to.path === ROUTES_PATHS.LOGIN || to.path === ROUTES_PATHS.REGISTER) &&
+    (isAuthenticated || isAdmin)
+  ) {
+    return ROUTES_PATHS.CATALOG
+  }
 })

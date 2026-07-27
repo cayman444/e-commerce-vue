@@ -45,10 +45,10 @@ const emit = defineEmits<{
         <RouterLink
           v-if="isAdmin"
           :to="ROUTES_PATHS.ADMIN"
-          class="flex items-center justify-between px-3 py-2.5 text-xs text-primary hover:bg-primary/5 transition-colors uppercase tracking-wider font-semibold"
+          class="flex items-center justify-between px-3 py-2.5 text-xs text-secondary hover:bg-tertiary/10 transition-colors uppercase tracking-wider font-medium"
         >
           <span>Админ-панель</span>
-          <ShieldCheck :size="14" class="text-primary" />
+          <ShieldCheck :size="14" class="text-tertiary" />
         </RouterLink>
         <button
           @click="emit('logout')"

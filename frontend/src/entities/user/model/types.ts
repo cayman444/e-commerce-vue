@@ -11,10 +11,17 @@ export interface IUser {
   publishedAt: string
   role?: {
     id: number
+    documentId: string
     name: string
-    type: string
+    description: string
+    type: TUserRole
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
   }
 }
+
+export type TUserRole = 'authenticated' | 'public' | 'admin'
 
 export interface IAuthResponse {
   jwt: string
