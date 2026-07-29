@@ -13,16 +13,20 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async (payload: ILoginPayload) => {
     const { data } = await loginApi(payload)
-    user.value = data.user
     accessToken.value = data.jwt
+
+    const meRes = await getMeApi()
+    user.value = meRes.data
 
     return data
   }
 
   const register = async (payload: IRegisterPayload) => {
     const { data } = await registerApi(payload)
-    user.value = data.user
     accessToken.value = data.jwt
+
+    const meRes = await getMeApi()
+    user.value = meRes.data
 
     return data
   }
