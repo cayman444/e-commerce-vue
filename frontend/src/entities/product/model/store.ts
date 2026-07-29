@@ -3,7 +3,7 @@ import { mapStrapiProductToProduct } from '@/shared/lib/utils'
 import { useAsyncState } from '@vueuse/core'
 import { isAxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { type LocationQueryRaw, useRoute } from 'vue-router'
 import { getProductsList, getProductsRequestParams } from '../api/product'
 import { isCategoryFilter, isSortFilter } from './type-guards'
@@ -66,13 +66,6 @@ export const useProductStore = defineStore('productStore', () => {
 
     router.push({ query: updatedQuery })
   }
-
-  watch(
-    () => route.query,
-    () => {
-      fetchProducts()
-    },
-  )
 
   return {
     products,
