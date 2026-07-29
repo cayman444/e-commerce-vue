@@ -1,5 +1,5 @@
 import { useUserStore } from '@/entities/user'
-import { About, Cart, Catalog, Journal, Login, Product, Register } from '@/pages'
+import { About, Cart, Catalog, Journal, Login, Product, Profile, Register } from '@/pages'
 import { createRouter, createWebHistory } from 'vue-router'
 
 export const ROUTES_PATHS = {
@@ -24,6 +24,7 @@ export const router = createRouter({
     { path: ROUTES_PATHS.CART, component: Cart },
     { path: ROUTES_PATHS.LOGIN, component: Login },
     { path: ROUTES_PATHS.REGISTER, component: Register },
+    { path: ROUTES_PATHS.PROFILE, component: Profile },
   ],
 })
 
