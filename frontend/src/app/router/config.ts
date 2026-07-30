@@ -1,5 +1,6 @@
 import { useUserStore } from '@/entities/user'
 import { About, Cart, Catalog, Journal, Login, Product, Profile, Register } from '@/pages'
+import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 
 export const ROUTES_PATHS = {
@@ -28,12 +29,26 @@ export const router = createRouter({
   ],
 })
 
-router.beforeEach((to) => {
-  const { isAuthenticated, isAdmin } = useUserStore()
+router.beforeEach(async (to) => {
+  const userStore = useUserStore()
+  const { isInitialLoading, isAuthenticated, isAdmin } = storeToRefs(userStore)
+
+  if (isInitialLoading.value) {
+    await userStore.initAuth()
+    isInitialLoading.value = false
+  }
+
+  if (to.path === ROUTES_PATHS.PROFILE && !isAuthenticated.value) {
+    return ROUTES_PATHS.LOGIN
+  }
+
+  if (to.path === ROUTES_PATHS.ADMIN && (!isAuthenticated.value || !isAdmin.value)) {
+    return ROUTES_PATHS.CATALOG
+  }
 
   if (
     (to.path === ROUTES_PATHS.LOGIN || to.path === ROUTES_PATHS.REGISTER) &&
-    (isAuthenticated || isAdmin)
+    isAuthenticated.value
   ) {
     return ROUTES_PATHS.CATALOG
   }
