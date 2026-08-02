@@ -3,3 +3,4 @@ export type { IUser, IAuthResponse, ILoginPayload, IRegisterPayload } from './mo
 export { default as UserProfile } from './ui/UserProfile.vue'
 export { default as UserInfoCard } from './ui/UserInfoCard.vue'
 export { default as UserInfoCart } from './ui/UserInfoCart.vue'
+export { default as UserOrderHistory } from './ui/UserOrderHistory.vue'

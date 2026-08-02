@@ -29,7 +29,7 @@ const formatMessage = computed(() => {
 
 <template>
   <div
-    class="bg-neutral border border-secondary/10 p-8 flex flex-col justify-between h-full min-h-[220px] w-full"
+    class="bg-neutral border border-secondary/10 p-8 flex flex-col justify-between h-full min-h-55 w-full"
   >
     <div>
       <h3 class="font-display text-2xl md:text-3xl text-secondary mb-2 font-normal">Корзина</h3>

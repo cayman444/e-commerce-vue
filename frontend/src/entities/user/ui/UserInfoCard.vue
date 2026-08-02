@@ -16,11 +16,13 @@ const emit = defineEmits<{
 
 <template>
   <div class="flex flex-col md:flex-row items-start md:items-center gap-8 w-full">
-    <div
-      class="w-32 h-32 md:w-36 md:h-36 shrink-0 bg-neutral border border-secondary/10 flex items-center justify-center text-secondary font-display font-medium text-3xl uppercase tracking-wider select-none overflow-hidden"
-    >
-      <span v-if="user?.username">{{ user.username.charAt(0) }}</span>
-      <UserIcon v-else :size="48" class="text-tertiary" />
+    <div class="relative shrink-0 select-none">
+      <div
+        class="w-28 h-28 md:w-32 md:h-32 bg-secondary/20 text-neutral flex items-center justify-center font-display text-3xl md:text-4xl uppercase tracking-wider"
+      >
+        <span v-if="user?.username">{{ user.username.charAt(0) }}</span>
+        <UserIcon v-else :size="40" class="text-neutral/80" />
+      </div>
     </div>
     <div class="flex flex-col gap-4">
       <div>
