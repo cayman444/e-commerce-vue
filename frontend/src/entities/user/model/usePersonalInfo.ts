@@ -7,7 +7,7 @@ import { useUserStore } from './store'
 
 export const usePersonalInfo = () => {
   const userStore = useUserStore()
-  const { user } = storeToRefs(userStore)
+  const { user, isAdmin } = storeToRefs(userStore)
 
   const isLoaded = ref(false)
 
@@ -22,5 +22,9 @@ export const usePersonalInfo = () => {
     }
   }
 
-  return { user, isLoaded, handleLogout }
+  const handleNavigateToAdmin = () => {
+    router.push(ROUTES_PATHS.ADMIN)
+  }
+
+  return { user, isAdmin, isLoaded, handleLogout, handleNavigateToAdmin }
 }
