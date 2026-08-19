@@ -5,7 +5,7 @@ import { AccountDetails, PersonalInfo } from '@/entities/user'
 
 <template>
   <div class="px-8 py-8 md:px-16 md:py-16 flex flex-col gap-12 lg:gap-16">
-    <div class="grid grid-cols-1 lg:grid-cols-12 items-start gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <div class="lg:col-span-8">
         <PersonalInfo />
       </div>
