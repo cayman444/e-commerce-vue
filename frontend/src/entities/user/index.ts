@@ -1,5 +1,7 @@
 export { useUserStore } from './model/store'
 export { usePersonalInfo } from './model/usePersonalInfo'
+export { useAccountDetails } from './model/useAccountDetails'
 export type { IUser, IAuthResponse, ILoginPayload, IRegisterPayload } from './model/types'
 export { default as UserProfile } from './ui/UserProfile.vue'
 export { default as PersonalInfo } from './ui/PersonalInfo.vue'
+export { default as AccountDetails } from './ui/AccountDetails.vue'

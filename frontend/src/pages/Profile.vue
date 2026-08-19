@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { CartInfo } from '@/entities/cart'
-import { PersonalInfo } from '@/entities/user'
+import { AccountDetails, PersonalInfo } from '@/entities/user'
 </script>
 
 <template>
-  <div class="px-8 py-8 md:px-16 md:py-16 flex flex-col gap-12 lg:gap-24">
+  <div class="px-8 py-8 md:px-16 md:py-16 flex flex-col gap-12 lg:gap-16">
     <div class="grid grid-cols-1 lg:grid-cols-12 items-start gap-6">
       <div class="lg:col-span-8">
         <PersonalInfo />
@@ -14,5 +14,6 @@ import { PersonalInfo } from '@/entities/user'
       </div>
     </div>
     <span class="w-full h-px bg-secondary/10"></span>
+    <AccountDetails />
   </div>
 </template>
