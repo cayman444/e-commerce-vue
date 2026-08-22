@@ -1,5 +1,5 @@
 import { useUserStore } from '@/entities/user'
-import { About, Cart, Catalog, Journal, Login, Product, Profile, Register } from '@/pages'
+import { About, Admin, Cart, Catalog, Journal, Login, Product, Profile, Register } from '@/pages'
 import { storeToRefs } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -26,6 +26,7 @@ export const router = createRouter({
     { path: ROUTES_PATHS.LOGIN, component: Login },
     { path: ROUTES_PATHS.REGISTER, component: Register },
     { path: ROUTES_PATHS.PROFILE, component: Profile },
+    { path: ROUTES_PATHS.ADMIN, component: Admin },
   ],
 })
 

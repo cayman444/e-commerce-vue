@@ -79,3 +79,14 @@ export interface IStrapiResponse<T> {
     }
   }
 }
+
+export interface ICreateProductDTO {
+  name: string
+  description: string
+  price: number
+  inStock: boolean
+  category: TProductCategory
+  images?: number[]
+}
+
+export type IUpdateProductDTO = Partial<ICreateProductDTO>

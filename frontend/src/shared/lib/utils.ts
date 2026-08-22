@@ -15,6 +15,15 @@ export function formatPrice(price: number): string {
   }).format(price)
 }
 
+export const getStrapiMediaUrl = (url?: string | null): string => {
+  if (!url) return 'https://placehold.co/200x300?text=No+Image'
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
+    return url
+  }
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:1337'
+  return `${backendUrl}${url.startsWith('/') ? '' : '/'}${url}`
+}
+
 export const mapStrapiProductToProduct = ({
   name,
   description,
@@ -27,11 +36,9 @@ export const mapStrapiProductToProduct = ({
   specs,
   accordions,
 }: IStrapiProduct): IProduct => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:1337'
-
   const imageUrls =
     images && images.length > 0
-      ? images.map((img) => `${backendUrl}${img.url}`)
+      ? images.map((img) => getStrapiMediaUrl(img.url))
       : ['https://placehold.co/200x300?text=No+Image']
 
   return {

@@ -1,5 +1,12 @@
 import { apiInstance } from '@/shared/api/client'
-import type { IProductFilters, IStrapiProduct, IStrapiResponse, TSort } from '../model/types'
+import type {
+  ICreateProductDTO,
+  IProductFilters,
+  IStrapiProduct,
+  IStrapiResponse,
+  IUpdateProductDTO,
+  TSort,
+} from '../model/types'
 
 export const getProductsList = (params: Record<string, unknown>) => {
   return apiInstance.get<IStrapiResponse<IStrapiProduct>>('/products', { params })
@@ -35,4 +42,16 @@ export const getProductsRequestParams = (filters: IProductFilters) => {
   params['sort'] = sortMap[filters.sort]
 
   return params
+}
+
+export const createProduct = (dto: ICreateProductDTO) => {
+  return apiInstance.post<{ data: IStrapiProduct }>('/products', { data: dto })
+}
+
+export const updateProduct = (id: number | string, dto: IUpdateProductDTO) => {
+  return apiInstance.put<{ data: IStrapiProduct }>(`/products/${id}`, { data: dto })
+}
+
+export const deleteProduct = (id: number | string) => {
+  return apiInstance.delete(`/products/${id}`)
 }

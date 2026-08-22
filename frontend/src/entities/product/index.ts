@@ -5,7 +5,7 @@ export { default as ProductAccordion } from './ui/ProductAccordion.vue'
 export { useProductStore } from './model/store'
 export { CATEGORY_LABELS, CATEGORY_FILTERS, SORT_OPTIONS } from './model/constants'
 export { useProductDetails } from './model/useProductDetails.ts'
-export { getProductById } from './api/product.ts'
+export { getProductById, getProductsList, createProduct, updateProduct, deleteProduct } from './api/product.ts'
 export type {
   IProduct,
   TCategory,
@@ -13,4 +13,8 @@ export type {
   IPriceRange,
   TSort,
   IStrapiProduct,
+  IStrapiMedia,
+  ICreateProductDTO,
+  IUpdateProductDTO,
 } from './model/types'
+

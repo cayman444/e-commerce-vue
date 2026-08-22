@@ -17,9 +17,9 @@ export const isIPriceRangeFilter = (filter: unknown): filter is IPriceRange => {
 
   return (
     'min' in filter &&
-    (typeof filter.min === 'number' || typeof filter.min === null) &&
+    (typeof filter.min === 'number' || filter.min === null) &&
     'max' in filter &&
-    (typeof filter.max === 'number' || typeof filter.max === null)
+    (typeof filter.max === 'number' || filter.max === null)
   )
 }
 
