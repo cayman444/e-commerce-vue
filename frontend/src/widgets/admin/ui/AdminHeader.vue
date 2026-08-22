@@ -4,11 +4,11 @@ import { Plus, Search } from '@lucide/vue'
 
 defineProps<{
   totalCount: number
-  search: string
 }>()
 
+const search = defineModel<string>('search', { required: true })
+
 const emits = defineEmits<{
-  'update:search': [value: string]
   'add-product': []
 }>()
 </script>
@@ -25,11 +25,10 @@ const emits = defineEmits<{
       <div class="relative flex-1 md:w-64">
         <Search class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-tertiary" />
         <input
-          :value="search"
+          v-model="search"
           type="text"
           placeholder="Поиск по названию..."
           class="w-full pl-9 pr-3 py-2 text-sm border border-secondary/20 bg-neutral outline-none"
-          @input="(e) => emits('update:search', (e.target as HTMLInputElement).value)"
         />
       </div>
       <Button

@@ -19,15 +19,12 @@ const emits = defineEmits<{
 
 const {
   name,
-  nameProps,
   price,
-  priceProps,
   category,
   inStock,
-  inStockProps,
   description,
-  descriptionProps,
   imageFields,
+  isUploading,
   handleUploadImages,
   removeImage,
   specFields,
@@ -38,7 +35,6 @@ const {
   removeAccordion,
   errors,
   isLoading,
-  isUploading,
   submitForm,
 } = useProductForm(toRef(props, 'product'), () => emits('saved'))
 </script>
@@ -51,10 +47,6 @@ const {
       v-model:price="price"
       v-model:in-stock="inStock"
       v-model:description="description"
-      :name-props="nameProps"
-      :price-props="priceProps"
-      :in-stock-props="inStockProps"
-      :description-props="descriptionProps"
       :errors="errors"
     />
     <ProductImageUpload

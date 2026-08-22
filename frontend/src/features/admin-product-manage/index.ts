@@ -5,7 +5,8 @@ export { default as ProductSpecsFields } from './ui/ProductSpecsFields.vue'
 export { default as ProductAccordionsFields } from './ui/ProductAccordionsFields.vue'
 export { default as ProductDeleteModal } from './ui/ProductDeleteModal.vue'
 export { useProductForm } from './model/useProductForm'
+export { useProductImageUpload } from './model/useProductImageUpload'
 export { useProductDelete } from './model/useProductDelete'
-export { productSchema, productZodSchema, type ProductFormValues } from './model/product.schema'
+export { productSchema, productZodSchema, type ProductFormValues, type IProductImageItem } from './model/product.schema'
 
 

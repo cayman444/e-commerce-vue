@@ -8,10 +8,6 @@ const inStock = defineModel<boolean>('inStock')
 const description = defineModel<string>('description')
 
 defineProps<{
-  nameProps?: Record<string, unknown>
-  priceProps?: Record<string, unknown>
-  inStockProps?: Record<string, unknown>
-  descriptionProps?: Record<string, unknown>
   errors?: Partial<Record<'name' | 'category' | 'price' | 'description', string>>
 }>()
 </script>
@@ -22,7 +18,6 @@ defineProps<{
       <label class="text-xs uppercase text-tertiary">Название</label>
       <input
         v-model="name"
-        v-bind="nameProps"
         type="text"
         class="w-full border border-secondary/20 p-2 text-sm bg-neutral outline-none"
         placeholder="Название товара"
@@ -46,7 +41,6 @@ defineProps<{
         <label class="text-xs uppercase text-tertiary">Цена ($)</label>
         <input
           v-model.number="price"
-          v-bind="priceProps"
           type="number"
           min="0"
           class="w-full border border-secondary/20 p-2 text-sm bg-neutral outline-none"
@@ -55,20 +49,13 @@ defineProps<{
       </div>
     </div>
     <div class="flex items-center gap-2 py-1">
-      <input
-        id="inStockCheck"
-        v-model="inStock"
-        v-bind="inStockProps"
-        type="checkbox"
-        class="accent-primary"
-      />
+      <input id="inStockCheck" v-model="inStock" type="checkbox" class="accent-primary" />
       <label for="inStockCheck" class="text-sm cursor-pointer select-none">В наличии</label>
     </div>
     <div class="space-y-1">
       <label class="text-xs uppercase text-tertiary">Описание</label>
       <textarea
         v-model="description"
-        v-bind="descriptionProps"
         rows="3"
         class="w-full min-h-22 border border-secondary/20 p-2 text-sm bg-neutral outline-none resize-none"
         placeholder="Описание товара"
