@@ -1,6 +1,16 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 
+export const specItemSchema = z.object({
+  title: z.string().min(1, 'Укажите название характеристики'),
+  description: z.string().min(1, 'Укажите значение'),
+})
+
+export const accordionItemSchema = z.object({
+  title: z.string().min(1, 'Укажите заголовок секции'),
+  content: z.string().min(1, 'Укажите содержимое'),
+})
+
 export const productZodSchema = z.object({
   name: z
     .string({ required_error: 'Название обязательно' })
@@ -17,8 +27,11 @@ export const productZodSchema = z.object({
     .min(1, 'Описание обязательно'),
   imageId: z.number().nullable().optional(),
   imageUrl: z.string().optional(),
+  specs: z.array(specItemSchema).default([]),
+  accordions: z.array(accordionItemSchema).default([]),
 })
 
 export const productSchema = toTypedSchema(productZodSchema)
 
 export type ProductFormValues = z.infer<typeof productZodSchema>
+

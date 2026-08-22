@@ -24,7 +24,7 @@ const handleSaved = () => {
 
 <template>
   <Dialog :open="open" @update:open="(val) => emits('update:open', val)">
-    <DialogContent class="max-w-lg">
+    <DialogContent class="max-w-xl max-h-[85vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle>{{ isEditing ? 'Редактирование товара' : 'Новый товар' }}</DialogTitle>
         <DialogDescription class="text-xs text-tertiary">
@@ -35,11 +35,7 @@ const handleSaved = () => {
           }}
         </DialogDescription>
       </DialogHeader>
-      <ProductForm
-        :product="product"
-        @cancel="emits('update:open', false)"
-        @saved="handleSaved"
-      />
+      <ProductForm :product="product" @cancel="emits('update:open', false)" @saved="handleSaved" />
     </DialogContent>
   </Dialog>
 </template>

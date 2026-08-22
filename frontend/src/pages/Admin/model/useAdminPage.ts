@@ -14,7 +14,10 @@ export const useAdminPage = () => {
   const fetchProducts = async () => {
     isLoading.value = true
     try {
-      const { data } = await getProductsList({ populate: 'images', sort: 'createdAt:desc' })
+      const { data } = await getProductsList({
+        populate: ['images', 'specs', 'accordions'],
+        sort: 'createdAt:desc',
+      })
       products.value = data.data.map(mapStrapiProductToProduct)
     } catch (err) {
       console.error('Failed to fetch products', err)

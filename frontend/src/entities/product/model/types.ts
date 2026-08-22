@@ -80,6 +80,16 @@ export interface IStrapiResponse<T> {
   }
 }
 
+export interface ISpecItemDTO {
+  title: string
+  description: string
+}
+
+export interface IAccordionItemDTO {
+  title: string
+  content: string
+}
+
 export interface ICreateProductDTO {
   name: string
   description: string
@@ -87,6 +97,9 @@ export interface ICreateProductDTO {
   inStock: boolean
   category: TProductCategory
   images?: number[]
+  specs?: ISpecItemDTO[]
+  accordions?: IAccordionItemDTO[]
 }
 
 export type IUpdateProductDTO = Partial<ICreateProductDTO>
+

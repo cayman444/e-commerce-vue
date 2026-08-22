@@ -3,8 +3,10 @@ import type { IProduct } from '@/entities/product'
 import { Button, DialogFooter } from '@/shared/ui'
 import { toRef } from 'vue'
 import { useProductForm } from '../model/useProductForm'
+import ProductAccordionsFields from './ProductAccordionsFields.vue'
 import ProductCategorySelect from './ProductCategorySelect.vue'
 import ProductImageUpload from './ProductImageUpload.vue'
+import ProductSpecsFields from './ProductSpecsFields.vue'
 
 const props = defineProps<{
   product?: IProduct | null
@@ -26,6 +28,12 @@ const {
   description,
   descriptionProps,
   imageUrl,
+  specFields,
+  addSpec,
+  removeSpec,
+  accordionFields,
+  addAccordion,
+  removeAccordion,
   errors,
   isLoading,
   isUploading,
@@ -48,10 +56,7 @@ const {
       <span v-if="errors.name" class="text-xs text-red-500">{{ errors.name }}</span>
     </div>
     <div class="grid grid-cols-2 gap-4">
-      <ProductCategorySelect
-        v-model="category"
-        :error="errors.category"
-      />
+      <ProductCategorySelect v-model="category" :error="errors.category" />
       <div class="space-y-1">
         <label class="text-xs uppercase text-tertiary">Цена ($)</label>
         <input
@@ -80,7 +85,7 @@ const {
         v-model="description"
         v-bind="descriptionProps"
         rows="3"
-        class="w-full border border-secondary/20 p-2 text-sm bg-neutral outline-none resize-none"
+        class="w-full min-h-22 border border-secondary/20 p-2 text-sm bg-neutral outline-none resize-none"
         placeholder="Описание товара"
       ></textarea>
       <span v-if="errors.description" class="text-xs text-red-500">{{ errors.description }}</span>
@@ -90,7 +95,17 @@ const {
       :is-uploading="isUploading"
       @upload="handleUploadImage"
     />
-    <DialogFooter>
+    <ProductSpecsFields
+      :fields="specFields"
+      @add="() => addSpec({ title: '', description: '' })"
+      @remove="removeSpec"
+    />
+    <ProductAccordionsFields
+      :fields="accordionFields"
+      @add="() => addAccordion({ title: '', content: '' })"
+      @remove="removeAccordion"
+    />
+    <DialogFooter class="pt-2">
       <Button type="button" variant="outline" @click="emits('cancel')"> Отмена </Button>
       <Button type="submit" :disabled="isLoading || isUploading">
         {{ isLoading ? 'Сохранение...' : 'Сохранить' }}

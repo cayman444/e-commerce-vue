@@ -1,8 +1,8 @@
-import type { IProduct } from '@/entities/product'
+import type { IAccordionItemDTO, IProduct, ISpecItemDTO } from '@/entities/product'
 import { createProduct, updateProduct } from '@/entities/product'
 import { uploadMedia } from '@/shared/api/upload'
 import { getStrapiErrorMessage } from '@/shared/lib/utils'
-import { useForm } from 'vee-validate'
+import { useFieldArray, useForm } from 'vee-validate'
 import { computed, ref, type Ref, watch } from 'vue'
 import { toast } from 'vue-sonner'
 import { type ProductFormValues, productSchema } from './product.schema'
@@ -15,6 +15,8 @@ const getInitialValues = (prod?: IProduct | null): ProductFormValues => ({
   description: prod?.description || '',
   imageId: null,
   imageUrl: prod?.image || prod?.images?.[0] || '',
+  specs: prod?.specs?.map((s) => ({ title: s.title, description: s.description })) || [],
+  accordions: prod?.accordions?.map((a) => ({ title: a.title, content: a.content })) || [],
 })
 
 export const useProductForm = (
@@ -31,6 +33,18 @@ export const useProductForm = (
       validationSchema: productSchema,
       initialValues: getInitialValues(product.value),
     })
+
+  const {
+    fields: specFields,
+    push: addSpec,
+    remove: removeSpec,
+  } = useFieldArray<ISpecItemDTO>('specs')
+
+  const {
+    fields: accordionFields,
+    push: addAccordion,
+    remove: removeAccordion,
+  } = useFieldArray<IAccordionItemDTO>('accordions')
 
   watch(
     product,
@@ -75,6 +89,8 @@ export const useProductForm = (
         inStock: values.inStock,
         description: values.description,
         images: values.imageId ? [values.imageId] : undefined,
+        specs: values.specs,
+        accordions: values.accordions,
       }
 
       if (product.value?.id) {
@@ -105,6 +121,12 @@ export const useProductForm = (
     descriptionProps,
     imageUrl,
     imageId,
+    specFields,
+    addSpec,
+    removeSpec,
+    accordionFields,
+    addAccordion,
+    removeAccordion,
     errors,
     isEditing,
     isLoading,

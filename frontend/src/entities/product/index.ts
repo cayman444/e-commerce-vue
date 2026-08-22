@@ -16,5 +16,7 @@ export type {
   IStrapiMedia,
   ICreateProductDTO,
   IUpdateProductDTO,
+  ISpecItemDTO,
+  IAccordionItemDTO,
 } from './model/types'
 
