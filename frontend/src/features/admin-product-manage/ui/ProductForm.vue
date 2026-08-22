@@ -4,7 +4,7 @@ import { Button, DialogFooter } from '@/shared/ui'
 import { toRef } from 'vue'
 import { useProductForm } from '../model/useProductForm'
 import ProductAccordionsFields from './ProductAccordionsFields.vue'
-import ProductCategorySelect from './ProductCategorySelect.vue'
+import ProductGeneralFields from './ProductGeneralFields.vue'
 import ProductImageUpload from './ProductImageUpload.vue'
 import ProductSpecsFields from './ProductSpecsFields.vue'
 
@@ -44,52 +44,18 @@ const {
 
 <template>
   <form @submit.prevent="submitForm" class="space-y-4 my-2">
-    <div class="space-y-1">
-      <label class="text-xs uppercase text-tertiary">Название</label>
-      <input
-        v-model="name"
-        v-bind="nameProps"
-        type="text"
-        class="w-full border border-secondary/20 p-2 text-sm bg-neutral outline-none"
-        placeholder="Название товара"
-      />
-      <span v-if="errors.name" class="text-xs text-red-500">{{ errors.name }}</span>
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-      <ProductCategorySelect v-model="category" :error="errors.category" />
-      <div class="space-y-1">
-        <label class="text-xs uppercase text-tertiary">Цена ($)</label>
-        <input
-          v-model.number="price"
-          v-bind="priceProps"
-          type="number"
-          min="0"
-          class="w-full border border-secondary/20 p-2 text-sm bg-neutral outline-none"
-        />
-        <span v-if="errors.price" class="text-xs text-red-500">{{ errors.price }}</span>
-      </div>
-    </div>
-    <div class="flex items-center gap-2 py-1">
-      <input
-        id="inStockCheck"
-        v-model="inStock"
-        v-bind="inStockProps"
-        type="checkbox"
-        class="accent-primary"
-      />
-      <label for="inStockCheck" class="text-sm cursor-pointer select-none">В наличии</label>
-    </div>
-    <div class="space-y-1">
-      <label class="text-xs uppercase text-tertiary">Описание</label>
-      <textarea
-        v-model="description"
-        v-bind="descriptionProps"
-        rows="3"
-        class="w-full min-h-22 border border-secondary/20 p-2 text-sm bg-neutral outline-none resize-none"
-        placeholder="Описание товара"
-      ></textarea>
-      <span v-if="errors.description" class="text-xs text-red-500">{{ errors.description }}</span>
-    </div>
+    <ProductGeneralFields
+      v-model:name="name"
+      v-model:category="category"
+      v-model:price="price"
+      v-model:in-stock="inStock"
+      v-model:description="description"
+      :name-props="nameProps"
+      :price-props="priceProps"
+      :in-stock-props="inStockProps"
+      :description-props="descriptionProps"
+      :errors="errors"
+    />
     <ProductImageUpload
       :image-url="imageUrl"
       :is-uploading="isUploading"
