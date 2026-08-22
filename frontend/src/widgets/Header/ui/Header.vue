@@ -2,11 +2,9 @@
 import { UserProfile } from '@/entities/user'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { Menu, ShoppingBag, UserRound } from '@lucide/vue'
-import { RouterLink } from 'vue-router'
 import { useHeader } from '../model/useHeader'
 
 const {
-  navigation,
   isAdmin,
   isAuthenticated,
   isInitialLoading,
@@ -30,19 +28,6 @@ const {
       >
         Archive
       </h2>
-      <nav class="hidden md:flex">
-        <ul class="flex items-center gap-10 uppercase">
-          <li v-for="{ text, to } in navigation" :key="to">
-            <RouterLink
-              class="nav-link transition-all cursor-pointer font-semibold tracking-wider hover:opacity-70"
-              exact-active-class="active text-primary pointer-events-none"
-              :to="to"
-            >
-              {{ text }}
-            </RouterLink>
-          </li>
-        </ul>
-      </nav>
       <div class="flex items-center gap-6 [&>button]:cursor-pointer [&>button]:transition-opacity">
         <Skeleton v-if="isInitialLoading" class="size-5 rounded-full bg-tertiary/20" />
         <UserProfile

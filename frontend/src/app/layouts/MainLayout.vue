@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Toaster } from '@/shared/ui'
-import { Footer, Header } from '@/widgets'
+import { Header } from '@/widgets'
 </script>
 
 <template>
@@ -10,6 +10,5 @@ import { Footer, Header } from '@/widgets'
     <main class="grow flex flex-col w-full max-w-360 mx-auto">
       <slot />
     </main>
-    <Footer />
   </div>
 </template>
