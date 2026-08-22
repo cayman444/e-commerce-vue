@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { CATEGORY_LABELS, type IProduct } from '@/entities/product'
+import { formatPrice } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui'
 import { Edit2, Image as ImageIcon, Trash2 } from '@lucide/vue'
 import { ref } from 'vue'
@@ -39,9 +40,8 @@ const isLoaded = ref(false)
     <td class="py-3 px-4 text-tertiary">
       {{ CATEGORY_LABELS[product.category] || product.category }}
     </td>
-
     <td class="py-3 px-4 font-semibold text-secondary">
-      {{ product.price.toLocaleString('ru-RU') }} ₽
+      {{ formatPrice(product.price) }}
     </td>
     <td class="py-3 px-4">
       <span

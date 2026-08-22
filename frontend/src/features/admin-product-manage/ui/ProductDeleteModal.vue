@@ -37,7 +37,6 @@ const { isLoading, confirmDelete } = useProductDelete(toRef(props, 'product'), (
           Вы действительно хотите удалить товар «{{ product?.name }}»? Это действие нельзя отменить.
         </DialogDescription>
       </DialogHeader>
-
       <DialogFooter>
         <Button variant="outline" :disabled="isLoading" @click="emits('update:open', false)">
           Отмена
