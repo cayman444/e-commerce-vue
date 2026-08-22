@@ -27,7 +27,9 @@ const {
   inStockProps,
   description,
   descriptionProps,
-  imageUrl,
+  imageFields,
+  handleUploadImages,
+  removeImage,
   specFields,
   addSpec,
   removeSpec,
@@ -37,7 +39,6 @@ const {
   errors,
   isLoading,
   isUploading,
-  handleUploadImage,
   submitForm,
 } = useProductForm(toRef(props, 'product'), () => emits('saved'))
 </script>
@@ -57,9 +58,10 @@ const {
       :errors="errors"
     />
     <ProductImageUpload
-      :image-url="imageUrl"
+      :images="imageFields"
       :is-uploading="isUploading"
-      @upload="handleUploadImage"
+      @upload="handleUploadImages"
+      @remove="removeImage"
     />
     <ProductSpecsFields
       :fields="specFields"

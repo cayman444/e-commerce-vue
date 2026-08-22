@@ -25,6 +25,7 @@ export interface IProduct {
   price: number
   image: string
   images: string[]
+  rawImages?: IStrapiMedia[]
   inStock: boolean
   createdAt: string
   category: TProductCategory

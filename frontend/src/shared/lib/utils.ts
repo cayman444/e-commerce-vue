@@ -51,6 +51,7 @@ export const mapStrapiProductToProduct = ({
     category,
     image: imageUrls[0] || 'https://placehold.co/200x300?text=No+Image',
     images: imageUrls,
+    rawImages: images,
     specs,
     accordions,
   }

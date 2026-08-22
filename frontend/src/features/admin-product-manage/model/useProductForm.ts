@@ -1,23 +1,29 @@
 import type { IAccordionItemDTO, IProduct, ISpecItemDTO } from '@/entities/product'
 import { createProduct, updateProduct } from '@/entities/product'
-import { uploadMedia } from '@/shared/api/upload'
-import { getStrapiErrorMessage } from '@/shared/lib/utils'
+import { uploadMedias } from '@/shared/api/upload'
+import { getStrapiErrorMessage, getStrapiMediaUrl } from '@/shared/lib/utils'
 import { useFieldArray, useForm } from 'vee-validate'
 import { computed, ref, type Ref, watch } from 'vue'
 import { toast } from 'vue-sonner'
-import { type ProductFormValues, productSchema } from './product.schema'
+import { type IProductImageItem, type ProductFormValues, productSchema } from './product.schema'
 
-const getInitialValues = (prod?: IProduct | null): ProductFormValues => ({
-  name: prod?.name || '',
-  price: prod?.price ?? (undefined as unknown as number),
-  category: prod?.category || 'furniture',
-  inStock: prod?.inStock ?? true,
-  description: prod?.description || '',
-  imageId: null,
-  imageUrl: prod?.image || prod?.images?.[0] || '',
-  specs: prod?.specs?.map((s) => ({ title: s.title, description: s.description })) || [],
-  accordions: prod?.accordions?.map((a) => ({ title: a.title, content: a.content })) || [],
-})
+const getInitialValues = (prod?: IProduct | null): ProductFormValues => {
+  const images: IProductImageItem[] =
+    prod?.rawImages?.map((img) => ({ id: img.id, url: getStrapiMediaUrl(img.url) })) ||
+    prod?.images?.map((url) => ({ url })) ||
+    []
+
+  return {
+    name: prod?.name || '',
+    price: prod?.price ?? (undefined as unknown as number),
+    category: prod?.category || 'furniture',
+    inStock: prod?.inStock ?? true,
+    description: prod?.description || '',
+    images,
+    specs: prod?.specs?.map((s) => ({ title: s.title, description: s.description })) || [],
+    accordions: prod?.accordions?.map((a) => ({ title: a.title, content: a.content })) || [],
+  }
+}
 
 export const useProductForm = (
   product: Ref<IProduct | null | undefined>,
@@ -28,11 +34,16 @@ export const useProductForm = (
 
   const isEditing = computed(() => Boolean(product.value?.id))
 
-  const { errors, defineField, handleSubmit, resetForm, setFieldValue } =
-    useForm<ProductFormValues>({
-      validationSchema: productSchema,
-      initialValues: getInitialValues(product.value),
-    })
+  const { errors, defineField, handleSubmit, resetForm } = useForm<ProductFormValues>({
+    validationSchema: productSchema,
+    initialValues: getInitialValues(product.value),
+  })
+
+  const {
+    fields: imageFields,
+    push: addImage,
+    remove: removeImage,
+  } = useFieldArray<IProductImageItem>('images')
 
   const {
     fields: specFields,
@@ -61,19 +72,19 @@ export const useProductForm = (
   const [category] = defineField('category')
   const [inStock, inStockProps] = defineField('inStock')
   const [description, descriptionProps] = defineField('description')
-  const [imageUrl] = defineField('imageUrl')
-  const [imageId] = defineField('imageId')
 
-  const handleUploadImage = async (file: File) => {
+  const handleUploadImages = async (files: FileList | File[]) => {
     isUploading.value = true
     try {
-      const media = await uploadMedia(file)
-
-      setFieldValue('imageId', media.id)
-      setFieldValue('imageUrl', media.url)
-      toast.success('Изображение успешно загружено')
+      const uploaded = await uploadMedias(files)
+      for (const media of uploaded) {
+        addImage({ id: media.id, url: media.url })
+      }
+      toast.success(
+        uploaded.length > 1 ? 'Изображения успешно загружены' : 'Изображение успешно загружено',
+      )
     } catch (err) {
-      toast.error(getStrapiErrorMessage(err, 'Ошибка загрузки изображения'))
+      toast.error(getStrapiErrorMessage(err, 'Ошибка загрузки изображений'))
     } finally {
       isUploading.value = false
     }
@@ -82,13 +93,17 @@ export const useProductForm = (
   const submitForm = handleSubmit(async (values) => {
     isLoading.value = true
     try {
+      const imageIds = values.images
+        .map((img) => img.id)
+        .filter((id): id is number => typeof id === 'number')
+
       const dto = {
         name: values.name,
         price: values.price,
         category: values.category,
         inStock: values.inStock,
         description: values.description,
-        images: values.imageId ? [values.imageId] : undefined,
+        images: imageIds.length > 0 ? imageIds : undefined,
         specs: values.specs,
         accordions: values.accordions,
       }
@@ -119,8 +134,9 @@ export const useProductForm = (
     inStockProps,
     description,
     descriptionProps,
-    imageUrl,
-    imageId,
+    imageFields,
+    handleUploadImages,
+    removeImage,
     specFields,
     addSpec,
     removeSpec,
@@ -131,7 +147,6 @@ export const useProductForm = (
     isEditing,
     isLoading,
     isUploading,
-    handleUploadImage,
     submitForm,
   }
 }

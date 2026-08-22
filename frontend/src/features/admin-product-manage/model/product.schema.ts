@@ -11,6 +11,13 @@ export const accordionItemSchema = z.object({
   content: z.string().min(1, 'Укажите содержимое'),
 })
 
+export const productImageItemSchema = z.object({
+  id: z.number().optional(),
+  url: z.string(),
+})
+
+export type IProductImageItem = z.infer<typeof productImageItemSchema>
+
 export const productZodSchema = z.object({
   name: z
     .string({ required_error: 'Название обязательно' })
@@ -25,8 +32,7 @@ export const productZodSchema = z.object({
   description: z
     .string({ required_error: 'Описание обязательно' })
     .min(1, 'Описание обязательно'),
-  imageId: z.number().nullable().optional(),
-  imageUrl: z.string().optional(),
+  images: z.array(productImageItemSchema).default([]),
   specs: z.array(specItemSchema).default([]),
   accordions: z.array(accordionItemSchema).default([]),
 })
@@ -34,4 +40,5 @@ export const productZodSchema = z.object({
 export const productSchema = toTypedSchema(productZodSchema)
 
 export type ProductFormValues = z.infer<typeof productZodSchema>
+
 

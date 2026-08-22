@@ -15,3 +15,21 @@ export const uploadMedia = async (file: File): Promise<IStrapiMedia> => {
   return { ...media, url: getStrapiMediaUrl(media.url) }
 }
 
+export const uploadMedias = async (files: FileList | File[]): Promise<IStrapiMedia[]> => {
+  const formData = new FormData()
+  for (const file of Array.from(files)) {
+    formData.append('files', file)
+  }
+
+  const response = await apiInstance.post<IStrapiMedia[]>('/upload', formData)
+  if (!response.data || response.data.length === 0) {
+    throw new Error('Failed to upload files')
+  }
+
+  return response.data.map((media) => ({
+    ...media,
+    url: getStrapiMediaUrl(media.url),
+  }))
+}
+
+

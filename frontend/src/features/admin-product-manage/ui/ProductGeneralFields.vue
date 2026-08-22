@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { CATEGORY_LABELS, type TProductCategory } from '@/entities/product'
 
-const name = defineModel<string>('name', { required: true })
-const category = defineModel<TProductCategory>('category', { required: true })
-const price = defineModel<number>('price', { required: true })
-const inStock = defineModel<boolean>('inStock', { required: true })
-const description = defineModel<string>('description', { required: true })
+const name = defineModel<string>('name')
+const category = defineModel<TProductCategory>('category')
+const price = defineModel<number | undefined>('price')
+const inStock = defineModel<boolean>('inStock')
+const description = defineModel<string>('description')
 
 defineProps<{
   nameProps?: Record<string, unknown>
